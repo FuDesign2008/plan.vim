@@ -15,26 +15,32 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 let s:mplan_file = ''
+let s:root_path = expand('<sfile>:p:h')
+let s:node_js_cmd = 'null'
 
 if exists('g:mplan_file')
-     let s:mplan_file = g:mplan_file
+    let s:mplan_file = g:mplan_file
 endif
 
 " util
 " get the directory of the file
 " @param {String} file
 " @return {String}
-function! s:GetDirectoryByFile (file)
+function! s:GetDirectoryByFile(file)
     let slash_index = strridx(a:file, '/')
+
     " try find `\` for windows
     if slash_index == -1
         let slash_index = strridx(a:file, '\')
     endif
+
     if slash_index == -1
         return ''
     endif
+
     return strpart(a:file, 0, slash_index)
 endfunction
+
 
 " to check the variable about file
 if filereadable(s:mplan_file)
@@ -51,15 +57,23 @@ endif
 " open mplan file to  edit
 function! s:MPlan()
     if s:mplan_file != ''
-        vsplit s:mplan_file
+        execute 'edit '. s:mplan_file
     endif
 endfunction
 
 "open mplan file's directory to edit
 function! s:MPlanDir()
     if s:mplan_dir != ''
-        vsplit s:mplan_dir
+        execute 'edit' . s:mplan_dir
     endif
+endfunction
+
+
+"
+function! s:joinPath(...)
+  let paths = join(a:000,'/')
+  let root = s:root_path
+  return root.'/'.paths
 endfunction
 
 "@param {String} full day, 01-31
@@ -67,7 +81,23 @@ endfunction
 "@param {String} full year
 "@return {Integer} 0-6
 function! s:GetWeekdayByNodeJs(day, month, year)
-    return 0
+    if s:node_js_cmd == 'null'
+        let filePath = s:joinPath('js', 'get_weekday.js')
+        if !filereadable(filePath)
+            return -1
+        endif
+        let s:node_js_cmd = 'node "'. filePath . '" "<DATE>"'
+    endif
+
+    let date = a:year . '-' . a:month . '-' . a:day
+    let cmd = substitute(s:node_js_cmd, '<DATE>', date, '')
+    let weekday_index = system(cmd)
+    if weekday_index == 'ERROR'
+        let weekday_index = -1
+    else
+        let weekday_index = weekday_index + 0
+    endif
+    return weekday_index
 endfunction
 
 
@@ -76,51 +106,73 @@ endfunction
 "@param {Integer} year
 "@return {String}
 function! s:GetDayContent(day, month, year)
- let weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
- let weekday = s:GetWeekdayByNodeJs(a:day, a:month, a:year)
- let content = '##' . a:year . '-' . a:month . '-' . a:day . ' ' . weekdays[weekday] .';'
- let content = content .  '###Work;1. ;###Personal;1. ;'
- return content
+    let weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+    let index = s:GetWeekdayByNodeJs(a:day, a:month, a:year)
+    let weekStr = get(weekdays, index, '')
+    let content = '##' . a:year . '-' . a:month . '-' . a:day . ' ' . weekStr .';'
+    let content = content .  '###Work;1.;###Personal;1.;'
+    return content
 endfunction
 
 "when editing mplan file, insert all the template of a day
 "@param {Integer} day [optional]  default is current day
 "@param {Integer} month [optional]  default is current month
 "@param {Integer} year [optional] defautl is current year
-function! s:MPlanInsertDay(day, month, year)
+function! s:MPlanInsertDay(...)
+    "@see http://www.cplusplus.com/reference/ctime/strftime/
+    "for strftime()
+    "
+    "day of month, zero padded, 01
+    let day = get(a:000, 0)
+    if day == 0
+        let day = strftime('%d')
+    endif
+    "full month, 04
+    let month = get(a:000, 1)
+    if month == 0
+        let month = strftime('%m')
+    endif
+    "full year, 2013
+    let year = get(a:000, 2)
+    if year == 0
+        let year = strftime('%Y')
+    endif
 
-
+    let content = s:GetDayContent(day, month, year) . ';'
+    let all_content = split(content, ';')
+    let failed = append(line('.'), all_content)
 endfunction
-
-
 
 
 "when editing mplan file, insert all the template of a month
 "@param {Integer} month [optional]  default is current month
 "@param {Integer} year [optional] defautl is current year
-function! s:MPlanInsertMonth(month, year)
-    "full year, 2013
-    if !exists(a:year)
-        let y = strftime('%Y')
-    endif
+function! s:MPlanInsertMonth(...)
     "full month, 04
-    if !exists(a:month)
-        let m = strftime('%m')
+    let month = get(a:000, 0)
+    if month == 0
+        let month = strftime('%m')
     endif
-    let head = '#Plan of ' . y . '-' . m .';;'
-    let head = head + '##Work Targets;1. ;;'
-    let head = head + '##Personal Targets;1. ;;;'
+    "full year, 2013
+    let year = get(a:000, 1)
+    if year == 0
+        let year = strftime('%Y')
+    endif
+
+    let head = '#Plan of ' . year . '-' . month .';;'
+    let head = head . '##Work Targets;1.;;'
+    let head = head . '##Personal Targets;1.;;;'
     " convert to integer
-    let y = y + 0
-    let m = m + 0
+    let year = year + 0
+    let month = month + 0
 
     let day31 = [1,3,5,7,8,10,12]
     let day30 = [4,6,9,11]
 
     let days = 28
-    if index(day31, m) > -1
+    if index(day31, month) > -1
         let days = 31
-    elseif index(day30, m) > -1
+    elseif index(day30, month) > -1
         let days = 30
     endif
 
@@ -132,15 +184,30 @@ function! s:MPlanInsertMonth(month, year)
     endwhile
 
     let content = head . content
-    let content = split(content, ';')
-    append(line('.'), content)
+    let all_content = split(content, ';')
+    let failed = append(line('.'), all_content)
+    if failed
+        echo 'Insert plan failed!'
+    endif
+
+endfunction
+
+function! s:MPlanGotoToday()
+
 endfunction
 
 
 command! -nargs=0 MPlan call s:MPlan()
 command! -nargs=0 MPlanDir call s:MPlanDir()
-command! -nargs=* MPlanMonth call s:MPlanInsertMonth()
-command! -nargs=* MPlanDay call s:MPlanInsertDay()
+command! -nargs=* MPlanMonth call s:MPlanInsertMonth('<args>')
+command! -nargs=* MPlanDay call s:MPlanInsertDay('<args>')
+
+if !exists('g:mplan_map_key')
+    nnoremap <leader>mp :MPlan<CR>
+    nnoremap <leader>md :MPlanDir<CR>
+    nnoremap <leader>mm :MPlanMonth<CR>
+    nnoremap <leader>my :MPlanDay<CR>
+endif
 
 
 let &cpo = s:save_cpo

@@ -14,4 +14,5 @@ A vim utility for making monthly plan, todo and so on in markdown.
 ##Options
 
 g:mplan_file = ''
+g:mplan_map_key = ''
 
