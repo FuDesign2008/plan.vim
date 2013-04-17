@@ -194,7 +194,7 @@ endfunction
 
 function! s:PlanGotoToday()
     let str = '##' . strftime('%Y') . '-' . strftime('%m') . '-' .strftime('%d')
-    execute '/'. str . '<CR>'
+    execute '/'. str
 endfunction
 
 
