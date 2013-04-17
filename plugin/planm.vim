@@ -1,4 +1,4 @@
-"mplan.vim
+"planm.vim
 "Author: FuDesign2008@163.com
 "Version: 1.0.0
 "The plugin is a utility for making monthly plan in markdown.
@@ -6,20 +6,20 @@
 
 
 
-if &cp || exists('g:mplan_loaded')
+if &cp || exists('g:plan_loaded')
     finish
 endif
 
-let g:mplan_loaded = 1
+let g:plan_loaded = 1
 let s:save_cpo = &cpo
 set cpo&vim
 
-let s:mplan_file = ''
+let s:plan_file = ''
 let s:root_path = expand('<sfile>:p:h')
 let s:node_js_cmd = 'null'
 
-if exists('g:mplan_file')
-    let s:mplan_file = g:mplan_file
+if exists('g:plan_file')
+    let s:plan_file = g:plan_file
 endif
 
 " util
@@ -43,28 +43,28 @@ endfunction
 
 
 " to check the variable about file
-if filereadable(s:mplan_file)
-    let s:mplan_dir = s:GetDirectoryByFile(s:mplan_file)
-    if !isdirectory(s:mplan_dir)
-        let s:mplan_file = ''
-        let s:mplan_dir = ''
+if filereadable(s:plan_file)
+    let s:plan_dir = s:GetDirectoryByFile(s:plan_file)
+    if !isdirectory(s:plan_dir)
+        let s:plan_file = ''
+        let s:plan_dir = ''
     endif
 else
-    let s:mplan_file = ''
-    let s:mplan_dir = ''
+    let s:plan_file = ''
+    let s:plan_dir = ''
 endif
 
-" open mplan file to  edit
-function! s:MPlan()
-    if s:mplan_file != ''
-        execute 'edit '. s:mplan_file
+" open plan file to  edit
+function! s:Plan()
+    if s:plan_file != ''
+        execute 'edit '. s:plan_file
     endif
 endfunction
 
-"open mplan file's directory to edit
-function! s:MPlanDir()
-    if s:mplan_dir != ''
-        execute 'edit' . s:mplan_dir
+"open plan file's directory to edit
+function! s:PlanDir()
+    if s:plan_dir != ''
+        execute 'edit' . s:plan_dir
     endif
 endfunction
 
@@ -114,11 +114,11 @@ function! s:GetDayContent(day, month, year)
     return content
 endfunction
 
-"when editing mplan file, insert all the template of a day
+"when editing plan file, insert all the template of a day
 "@param {Integer} day [optional]  default is current day
 "@param {Integer} month [optional]  default is current month
 "@param {Integer} year [optional] defautl is current year
-function! s:MPlanInsertDay(...)
+function! s:PlanInsertDay(...)
     "@see http://www.cplusplus.com/reference/ctime/strftime/
     "for strftime()
     "
@@ -144,10 +144,10 @@ function! s:MPlanInsertDay(...)
 endfunction
 
 
-"when editing mplan file, insert all the template of a month
+"when editing plan file, insert all the template of a month
 "@param {Integer} month [optional]  default is current month
 "@param {Integer} year [optional] defautl is current year
-function! s:MPlanInsertMonth(...)
+function! s:PlanInsertMonth(...)
     "full month, 04
     let month = get(a:000, 0)
     if month == 0
@@ -192,21 +192,21 @@ function! s:MPlanInsertMonth(...)
 
 endfunction
 
-function! s:MPlanGotoToday()
+function! s:PlanGotoToday()
 
 endfunction
 
 
-command! -nargs=0 MPlan call s:MPlan()
-command! -nargs=0 MPlanDir call s:MPlanDir()
-command! -nargs=* MPlanMonth call s:MPlanInsertMonth('<args>')
-command! -nargs=* MPlanDay call s:MPlanInsertDay('<args>')
+command! -nargs=0 Plan call s:Plan()
+command! -nargs=0 PlanDir call s:PlanDir()
+command! -nargs=* PlanMonth call s:PlanInsertMonth('<args>')
+command! -nargs=* PlanDay call s:PlanInsertDay('<args>')
 
-if !exists('g:mplan_map_key')
-    nnoremap <leader>mp :MPlan<CR>
-    nnoremap <leader>md :MPlanDir<CR>
-    nnoremap <leader>mm :MPlanMonth<CR>
-    nnoremap <leader>my :MPlanDay<CR>
+if !exists('g:plan_map_key')
+    nnoremap <leader>pl :Plan<CR>
+    nnoremap <leader>pd :PlanDir<CR>
+    nnoremap <leader>pm :PlanMonth<CR>
+    nnoremap <leader>py :PlanDay<CR>
 endif
 
 

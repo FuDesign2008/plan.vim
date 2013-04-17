@@ -1,4 +1,4 @@
-MPlan.vim
+PlanM.vim
 =========
 
 A vim utility for making monthly plan, todo and so on in markdown.
@@ -6,13 +6,13 @@ A vim utility for making monthly plan, todo and so on in markdown.
 
 ##Usage
 
-:MPlan
-:MPlanDir
-:MPlanMonth
-:MPlanDay
+:Plan
+:PlanDir
+:PlanMonth
+:PlanDay
 
 ##Options
 
-g:mplan_file = ''
-g:mplan_map_key = ''
+g:plan_file = ''
+g:plan_map_key = ''
 
