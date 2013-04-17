@@ -1,4 +1,4 @@
-"planm.vim
+"plan.vim
 "Author: FuDesign2008@163.com
 "Version: 1.0.0
 "The plugin is a utility for making monthly plan in markdown.

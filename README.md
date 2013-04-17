@@ -1,4 +1,4 @@
-PlanM.vim
+plan.vim
 =========
 
 A vim utility for making monthly plan, todo and so on in markdown.
