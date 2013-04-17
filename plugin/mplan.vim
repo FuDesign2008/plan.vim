@@ -34,7 +34,7 @@ function! s:GetDirectoryByFile (file)
         return ''
     endif
     return strpart(a:file, 0, slash_index)
-endif
+endfunction
 
 " to check the variable about file
 if filereadable(s:mplan_file)
