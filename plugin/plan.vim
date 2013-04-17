@@ -193,7 +193,8 @@ function! s:PlanInsertMonth(...)
 endfunction
 
 function! s:PlanGotoToday()
-
+    let str = '##' . strftime('%Y') . '-' . strftime('%m') . '-' .strftime('%d')
+    execute '/'. str . '<CR>'
 endfunction
 
 
@@ -201,12 +202,14 @@ command! -nargs=0 Plan call s:Plan()
 command! -nargs=0 PlanDir call s:PlanDir()
 command! -nargs=* PlanMonth call s:PlanInsertMonth('<args>')
 command! -nargs=* PlanDay call s:PlanInsertDay('<args>')
+command! -nargs=0 PlanGo call s:PlanGotoToday()
 
 if !exists('g:plan_map_key')
     nnoremap <leader>pl :Plan<CR>
     nnoremap <leader>pd :PlanDir<CR>
     nnoremap <leader>pm :PlanMonth<CR>
     nnoremap <leader>py :PlanDay<CR>
+    nnoremap <leader>pg :PlanGo<CR>
 endif
 
 
