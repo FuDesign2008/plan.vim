@@ -110,7 +110,11 @@ function! s:GetDayContent(day, month, year)
     let index = s:GetWeekdayByNodeJs(a:day, a:month, a:year)
     let weekStr = get(weekdays, index, '')
     let content = '##' . a:year . '-' . a:month . '-' . a:day . ' ' . weekStr .';'
-    let content = content .  '###Work;1.;###Personal;1.;'
+    if index == 2
+        let content = content .  '###Work;1. weekly report;1.;###Personal;1.;'
+    else
+        let content = content .  '###Work;1.;###Personal;1.;'
+    endif
     return content
 endfunction
 
