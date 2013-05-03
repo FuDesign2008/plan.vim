@@ -100,6 +100,14 @@ function! s:GetWeekdayByNodeJs(day, month, year)
     return weekday_index
 endfunction
 
+" padding integer with zero if the integer is less than 10
+" @return {String}
+function! s:PaddingTen(int)
+    if a:int < 10
+        return '0' . a:int
+    endif
+    return a:int
+endfunction
 
 "@param {Integer} day, 1-31
 "@param {Integer} month, 1-12
@@ -109,7 +117,10 @@ function! s:GetDayContent(day, month, year)
     let weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
     let index = s:GetWeekdayByNodeJs(a:day, a:month, a:year)
     let weekStr = get(weekdays, index, '')
-    let content = '##' . a:year . '-' . a:month . '-' . a:day . ' ' . weekStr .';'
+    let month = s:PaddingTen(a:month)
+    let day = s:PaddingTen(a:day)
+    let content = '##' . a:year . '-' . month . '-' . day . ' ' . weekStr .';'
+
     if index == 2
         let content = content .  '###Work;1. weekly report;1.;###Personal;1.;'
     else
