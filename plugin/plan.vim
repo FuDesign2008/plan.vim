@@ -103,14 +103,15 @@ endfunction
 " padding integer with zero if the integer is less than 10
 " @return {String}
 function! s:PaddingTen(int)
+    let a:int = a:int + 0
     if a:int < 10
         return '0' . a:int
     endif
     return a:int
 endfunction
 
-"@param {Integer} day, 1-31
-"@param {Integer} month, 1-12
+"@param {Integer} day, 1-31 or 01-31
+"@param {Integer} month, 1-12 or 01-12
 "@param {Integer} year
 "@return {String}
 function! s:GetDayContent(day, month, year)
@@ -137,12 +138,12 @@ function! s:PlanInsertDay(...)
     "@see http://www.cplusplus.com/reference/ctime/strftime/
     "for strftime()
     "
-    "day of month, zero padded, 01
+    "day of month, 1-31, or 01-31
     let day = get(a:000, 0)
     if day == 0
         let day = strftime('%d')
     endif
-    "full month, 04
+    "full month, 1-12 or 01-12
     let month = get(a:000, 1)
     if month == 0
         let month = strftime('%m')
