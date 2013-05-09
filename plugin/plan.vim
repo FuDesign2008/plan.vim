@@ -123,9 +123,9 @@ function! s:GetDayContent(day, month, year)
     let content = '##' . a:year . '-' . month . '-' . day . ' ' . weekStr .';'
 
     if index == 2
-        let content = content .  ';###Money;1.;;###Work;1. weekly report;1.;;###Personal;1.'
+        let content = content .  ';###Work;1. weekly report;1.;;###Personal;1.'
     else
-        let content = content .  ';###Money;1.;;###Work;1.;;###Personal;1.;'
+        let content = content .  ';###Work;1.;;###Personal;1.;'
     endif
     return content
 endfunction
@@ -176,7 +176,6 @@ function! s:PlanInsertMonth(...)
     endif
 
     let head = '#Plan of ' . year . '-' . month .';;'
-    let head = head . ';##Money Targets;;###Income;1.薪水;;###Outlays;1.;'
     let head = head . ';##Work Targets;1.;'
     let head = head . ';##Personal Targets;1.;;'
     " convert to integer
