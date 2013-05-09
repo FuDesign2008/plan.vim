@@ -103,11 +103,11 @@ endfunction
 " padding integer with zero if the integer is less than 10
 " @return {String}
 function! s:PaddingTen(int)
-    let a:int = a:int + 0
-    if a:int < 10
-        return '0' . a:int
+    let num = a:int + 0
+    if num < 10
+        return '0' . num
     endif
-    return a:int
+    return num
 endfunction
 
 "@param {Integer} day, 1-31 or 01-31
