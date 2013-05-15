@@ -123,10 +123,17 @@ function! s:GetDayContent(day, month, year)
     let content = '##' . a:year . '-' . month . '-' . day . ' ' . weekStr .';'
 
     if index == 2
-        let content = content .  ';###Work;1. weekly report;1.;;###Personal;1.'
+        let content = content .  ';###Work;1. weekly report;1.;;###Personal;'
     else
-        let content = content .  ';###Work;1.;;###Personal;1.;'
+        let content = content .  ';###Work;1.;;###Personal;'
     endif
+
+    if a:day == 3
+        let content = content . '1. buy <<Programmer>> magazine;'
+    endif
+
+    let content = content . '1.;'
+
     return content
 endfunction
 
