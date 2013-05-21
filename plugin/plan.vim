@@ -227,7 +227,7 @@ command! -nargs=* PlanMonth call s:PlanInsertMonth('<args>')
 command! -nargs=* PlanDay call s:PlanInsertDay('<args>')
 command! -nargs=0 PlanGo call s:PlanGotoToday()
 
-if !exists('g:plan_map_key')
+if !exists('g:plan_custom_keymap')
     nnoremap <leader>pl :Plan<CR>
     nnoremap <leader>pd :PlanDir<CR>
     nnoremap <leader>pm :PlanMonth<CR>
