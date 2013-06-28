@@ -124,6 +124,8 @@ function! s:GetDayContent(day, month, year)
 
     if index == 2
         let content = content .  ';###Work;1. weekly report;1.;;###Personal;'
+    elseif index == 5
+        let content = content .  ';###Work;1. webfront weekly meeting  ;1.;;###Personal;'
     else
         let content = content .  ';###Work;1.;;###Personal;'
     endif
