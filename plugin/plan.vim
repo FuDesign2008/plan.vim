@@ -120,20 +120,24 @@ function! s:GetDayContent(day, month, year)
     let weekStr = get(weekdays, index, '')
     let month = s:PaddingTen(a:month)
     let day = s:PaddingTen(a:day)
-    let content = '##' . a:year . '-' . month . '-' . day . ' ' . weekStr .';'
+    let content = '##' . a:year . '-' . month . '-' . day . ' ' . weekStr .';;'
 
-    if index == 2
-        let content = content .  ';###Work;1. weekly report;1.;;###Personal;'
+    "work items
+    let content = content . '###Work;'
+    if index == 1
+        let content = content .  '1. 10:00 - 11:00 @2层灵芝 YNote Editor Weekly meeting;'
+    elseif index == 2
+        let content = content .  '1. 16:00 - 16:30 weekly report;'
     elseif index == 5
-        let content = content .  ';###Work;1. webfront weekly meeting  ;1.;;###Personal;'
-    else
-        let content = content .  ';###Work;1.;;###Personal;'
+        let content = content .  '1. 14:00 - 16:00 @二层甘草 webfront weekly meeting;'
     endif
+    let content = content .  '1.;;'
 
+    "personal items
+    let content = content . '###Personal;'
     if a:day == 3
-        let content = content . '1. buy <<Programmer>> magazine;'
+        let content = content . '1. 18:00 ~ @报刊亭 buy <<Programmer>> magazine;'
     endif
-
     let content = content . '1.;'
 
     return content
