@@ -124,6 +124,9 @@ function! s:GetDayContent(day, month, year)
 
     "work items
     let content = content . '###Work;'
+    if a:day == 18
+        let content = content . '1. Sprint 总结, 会议;'
+    endif
     if index == 1
         let content = content .  '1. 10:00 - 11:00 @2层灵芝 YNote Editor Weekly meeting;'
     elseif index == 2
@@ -137,6 +140,8 @@ function! s:GetDayContent(day, month, year)
     let content = content . '###Personal;'
     if a:day == 3
         let content = content . '1. 18:00 ~ @报刊亭 buy <<Programmer>> magazine;'
+    elseif a:day == 28
+        let content = content . '1. 月度总结;1. 下月计划;'
     endif
     let content = content . '1.;'
 
