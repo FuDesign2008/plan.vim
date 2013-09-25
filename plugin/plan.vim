@@ -140,6 +140,8 @@ function! s:GetDayContent(day, month, year)
     let content = content . '###Personal;'
     if a:day == 3
         let content = content . '1. 18:00 ~ @报刊亭 buy <<Programmer>> magazine;'
+    elseif a:day == 8
+        let content = content . '1. 还房贷6k;'
     elseif a:day == 28
         let content = content . '1. 月度总结;1. 下月计划;'
     endif
