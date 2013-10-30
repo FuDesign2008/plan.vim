@@ -14,12 +14,32 @@ let g:plan_loaded = 1
 let s:save_cpo = &cpo
 set cpo&vim
 
-let s:plan_file = ''
 let s:root_path = expand('<sfile>:p:h')
 let s:node_js_cmd = 'null'
 
+let s:plan_file = ''
 if exists('g:plan_file')
     let s:plan_file = g:plan_file
+endif
+
+let s:planWeekWork = {}
+if exists('g:plan_week_work')
+    let s:planWeekWork = g:plan_week_work
+endif
+
+let s:planWeekPersonal = {}
+if exists('g:plan_week_personal')
+    let s:planWeekPersonal = g:plan_week_personal
+endif
+
+let s:planMonthWork = {}
+if exists('g:plan_month_work')
+    let s:planMonthWork = g:plan_month_work
+endif
+
+let s:planMonthPersonal = {}
+if exists('g:plan_month_personal')
+    let s:planMonthPersonal = g:plan_month_personal
 endif
 
 " util
@@ -55,14 +75,14 @@ else
 endif
 
 " open plan file to  edit
-function! s:Plan()
+function! s:EditPlan()
     if s:plan_file != ''
         execute 'edit '. s:plan_file
     endif
 endfunction
 
 "open plan file's directory to edit
-function! s:PlanDir()
+function! s:EditPlanDir()
     if s:plan_dir != ''
         execute 'edit' . s:plan_dir
     endif
@@ -110,42 +130,31 @@ function! s:PaddingTen(int)
     return num
 endfunction
 
-"@param {Integer} day, 1-31 or 01-31
-"@param {Integer} month, 1-12 or 01-12
+"@param {Integer} day, 1-31
+"@param {Integer} month, 1-12
 "@param {Integer} year
 "@return {String}
 function! s:GetDayContent(day, month, year)
     let weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-    let index = s:GetWeekdayByNodeJs(a:day, a:month, a:year)
-    let weekStr = get(weekdays, index, '')
+    let weekIndex = s:GetWeekdayByNodeJs(a:day, a:month, a:year)
+    let weekStr = get(weekdays, weekIndex, '')
     let month = s:PaddingTen(a:month)
-    let day = s:PaddingTen(a:day)
-    let content = '##' . a:year . '-' . month . '-' . day . ' ' . weekStr .';;'
-
-    "work items
+    let fullDay = s:PaddingTen(a:day)
+    let content = '##' . a:year . '-' . month . '-' . fullDay . ' ' . weekStr .';;'
+    "
+    "work
     let content = content . '###Work;'
-    if a:day == 18
-        let content = content . '1. Sprint 总结, 会议;'
-    endif
-    if index == 1
-        let content = content .  '1. 10:00 - 11:00 @2层灵芝 YNote Editor Weekly meeting;'
-    elseif index == 2
-        let content = content .  '1. 16:00 - 16:30 weekly report;'
-    elseif index == 5
-        let content = content .  '1. 14:00 - 16:00 @二层甘草 webfront weekly meeting;'
-    endif
-    let content = content .  '1.;;'
+    let regularTasks = get(s:planWeekWork, weekIndex, '')
+    let content = content . regularTasks
+    let regularTasks = get(s:planMonthWork, a:day, '')
+    let content = content . regularTasks . '1. ;;'
 
-    "personal items
+    "personal
     let content = content . '###Personal;'
-    if a:day == 3
-        let content = content . '1. 18:00 ~ @报刊亭 buy <<Programmer>> magazine;'
-    elseif a:day == 8
-        let content = content . '1. 还房贷6k;'
-    elseif a:day == 28
-        let content = content . '1. 月度总结;1. 下月计划;'
-    endif
-    let content = content . '1.;'
+    let regularTasks = get(s:planWeekPersonal, weekIndex, '')
+    let content = content . regularTasks
+    let regularTasks = get(s:planMonthPersonal, a:day, '')
+    let content = content . regularTasks . '1. ;;'
 
     return content
 endfunction
@@ -160,16 +169,19 @@ function! s:PlanInsertDay(...)
     "
     "day of month, 1-31, or 01-31
     let day = get(a:000, 0)
+    let day = str2nr(day, 10)
     if day == 0
         let day = strftime('%d')
     endif
     "full month, 1-12 or 01-12
     let month = get(a:000, 1)
+    let month = str2nr(month, 10)
     if month == 0
         let month = strftime('%m')
     endif
     "full year, 2013
     let year = get(a:000, 2)
+    let year = str2nr(year, 10)
     if year == 0
         let year = strftime('%Y')
     endif
@@ -234,18 +246,16 @@ function! s:PlanGotoToday()
 endfunction
 
 
-command! -nargs=0 Plan call s:Plan()
-command! -nargs=0 PlanDir call s:PlanDir()
+command! -nargs=0 EditPlan call s:EditPlan()
+command! -nargs=0 EditPlanDir call s:EditPlanDir()
 command! -nargs=* PlanMonth call s:PlanInsertMonth('<args>')
 command! -nargs=* PlanDay call s:PlanInsertDay('<args>')
-command! -nargs=0 PlanGo call s:PlanGotoToday()
+command! -nargs=0 GotoToday call s:PlanGotoToday()
 
 if !exists('g:plan_custom_keymap')
-    nnoremap <leader>pl :Plan<CR>
-    nnoremap <leader>pd :PlanDir<CR>
-    nnoremap <leader>pm :PlanMonth<CR>
-    nnoremap <leader>py :PlanDay<CR>
-    nnoremap <leader>pg :PlanGo<CR>
+    nnoremap <leader>ep :EditPlan<CR>
+    nnoremap <leader>ed :EditPlanDir<CR>
+    nnoremap <leader>gt :GotoToday<CR>
 endif
 
 
