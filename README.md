@@ -38,6 +38,7 @@ Tips: If you want to preview markdown file, you can install
 `.vimrc`.
 1. `g:plan_custom_keymap` custom to make key mapping or not, default value is
 `0`.
+
 ###Regular Task
 1. `g:plan_month_work` regular work-task for every month.
 1. `g:plan_month_personal` regular personal-task for every month.
