@@ -8,7 +8,7 @@ A vim utility for making monthly plan, todo and so on in markdown.
 1. Config regular-task options in `.vimrc`.
 1. Use `:PlanMonth` commond to make plan.
 
-Tips: If you want preview markdown file, you can install
+Tips: If you want to preview markdown file, you can install
 [MarkdownViewer.vim](https://github.com/FuDesign2008/MarkdownViewer.vim).
 
 ##Usage
@@ -67,5 +67,8 @@ let g:plan_month_personal = {
     \}
 
 ```
+
+##Screenshot
+![plan-vim.png](plan-vim.png)
 
 
