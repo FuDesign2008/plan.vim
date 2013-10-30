@@ -147,14 +147,14 @@ function! s:GetDayContent(day, month, year)
     let regularTasks = get(s:planWeekWork, weekIndex, '')
     let content = content . regularTasks
     let regularTasks = get(s:planMonthWork, a:day, '')
-    let content = content . regularTasks . '1. ;;'
+    let content = content . regularTasks . ';'
 
     "personal
     let content = content . '###Personal;'
     let regularTasks = get(s:planWeekPersonal, weekIndex, '')
     let content = content . regularTasks
     let regularTasks = get(s:planMonthPersonal, a:day, '')
-    let content = content . regularTasks . '1. ;;'
+    let content = content . regularTasks . ';'
 
     return content
 endfunction
