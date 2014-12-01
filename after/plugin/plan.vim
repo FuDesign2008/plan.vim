@@ -210,6 +210,7 @@ function! s:PlanInsertMonth(...)
     let head = '#Plan of ' . year . '-' . month .';;'
     let head = head . ';##Work Targets;1.;'
     let head = head . ';##Personal Targets;1.;;'
+    let head = head . ';##X Lab;1.;;'
     " convert to integer
     let year = year + 0
     let month = month + 0
