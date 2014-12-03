@@ -133,14 +133,20 @@ endfunction
 "@param {Integer} day, 1-31
 "@param {Integer} month, 1-12
 "@param {Integer} year
+"@param {Integer} isDiary
 "@return {String}
-function! s:GetDayContent(day, month, year)
+function! s:GetDayContent(day, month, year, isDiary)
     let weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
     let weekIndex = s:GetWeekdayByNodeJs(a:day, a:month, a:year)
     let weekStr = get(weekdays, weekIndex, '')
     let month = s:PaddingTen(a:month)
     let fullDay = s:PaddingTen(a:day)
     let content = '##' . a:year . '-' . month . '-' . fullDay . ' ' . weekStr .';;'
+
+    if a:isDiary
+        return content
+    endif
+
     "
     "work
     let content = content . '###Work;'
@@ -186,11 +192,42 @@ function! s:PlanInsertDay(...)
         let year = strftime('%Y')
     endif
 
-    let content = s:GetDayContent(day, month, year) . ';'
+    let content = s:GetDayContent(day, month, year, 0) . ';'
     let all_content = split(content, ';')
     let failed = append(line('.'), all_content)
 endfunction
 
+"when editing plan file, insert all the template of a day
+"@param {Integer} day [optional]  default is current day
+"@param {Integer} month [optional]  default is current month
+"@param {Integer} year [optional] defautl is current year
+function! s:DiaryInsertDay(...)
+    "@see http://www.cplusplus.com/reference/ctime/strftime/
+    "for strftime()
+    "
+    "day of month, 1-31, or 01-31
+    let day = get(a:000, 0)
+    let day = str2nr(day, 10)
+    if day == 0
+        let day = strftime('%d')
+    endif
+    "full month, 1-12 or 01-12
+    let month = get(a:000, 1)
+    let month = str2nr(month, 10)
+    if month == 0
+        let month = strftime('%m')
+    endif
+    "full year, 2013
+    let year = get(a:000, 2)
+    let year = str2nr(year, 10)
+    if year == 0
+        let year = strftime('%Y')
+    endif
+
+    let content = s:GetDayContent(day, month, year, 1) . ';'
+    let all_content = split(content, ';')
+    let failed = append(line('.'), all_content)
+endfunction
 
 "when editing plan file, insert all the template of a month
 "@param {Integer} month [optional]  default is current month
@@ -228,7 +265,7 @@ function! s:PlanInsertMonth(...)
     let counter = 1
     let content = ''
     while counter <= days
-        let content = content . s:GetDayContent(counter, month, year) . ';'
+        let content = content . s:GetDayContent(counter, month, year, 0) . ';'
         let counter += 1
     endwhile
 
@@ -241,7 +278,53 @@ function! s:PlanInsertMonth(...)
 
 endfunction
 
-function! s:PlanGotoToday()
+"when editing plan file, insert all the template of a month
+"@param {Integer} month [optional]  default is current month
+"@param {Integer} year [optional] defautl is current year
+function! s:DiaryInsertMonth(...)
+    "full month, 04
+    let month = get(a:000, 0)
+    if month == 0
+        let month = strftime('%m')
+    endif
+    "full year, 2013
+    let year = get(a:000, 1)
+    if year == 0
+        let year = strftime('%Y')
+    endif
+
+    let head = '#Diary of ' . year . '-' . month .';;'
+    " convert to integer
+    let year = year + 0
+    let month = month + 0
+
+    let day31 = [1,3,5,7,8,10,12]
+    let day30 = [4,6,9,11]
+
+    let days = 28
+    if index(day31, month) > -1
+        let days = 31
+    elseif index(day30, month) > -1
+        let days = 30
+    endif
+
+    let counter = 1
+    let content = ''
+    while counter <= days
+        let content = content . s:GetDayContent(counter, month, year, 1) . ';'
+        let counter += 1
+    endwhile
+
+    let content = head . content
+    let all_content = split(content, ';')
+    let failed = append(line('.'), all_content)
+    if failed
+        echo 'Insert diary failed!'
+    endif
+
+endfunction
+
+function! s:GotoToday()
     let str = '##' . strftime('%Y') . '-' . strftime('%m') . '-' .strftime('%d')
     execute '/'. str
 endfunction
@@ -251,7 +334,9 @@ command! -nargs=0 EditPlan call s:EditPlan()
 command! -nargs=0 EditPlanDir call s:EditPlanDir()
 command! -nargs=* PlanMonth call s:PlanInsertMonth('<args>')
 command! -nargs=* PlanDay call s:PlanInsertDay('<args>')
-command! -nargs=0 GotoToday call s:PlanGotoToday()
+command! -nargs=* DiaryMonth call s:DiaryInsertMonth('<args>')
+command! -nargs=* DiaryDay call s:DiaryInsertDay('<args>')
+command! -nargs=0 GotoToday call s:GotoToday()
 
 if !exists('g:plan_custom_keymap')
     nnoremap <leader>ep :EditPlan<CR>
