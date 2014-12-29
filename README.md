@@ -15,14 +15,14 @@ Tips: If you want to preview markdown file, you can install
 1. `:EditPlan` open and edit planning file, default map key is `<leader>ep`.
 1. `:EditPlanDir` open and edit planning file directory, default map key is
    `<leader>ed`.
-1. `:PlanMonth [month]  [year]` insert the template for a month.
+1. `:PlanMonth [month]  [year]` insert the template of plan for a month.
     * If there is no arguments, the command will insert the template for
     current month.
     * If there is only `month` argument, the command will insert template for
     the month in current year.
     * If there are both `month` and `year` arguments, the command will insert
     template for the month in the year.
-1. `:PlanDay [day] [month] [year]` insert the template for a day.
+1. `:PlanDay [day] [month] [year]` insert the template of plan for a day.
     * If there is no arguments, the command will insert the template for today.
     * If there is only `day` argument, the command will insert template for the
     day in current month and current year.
@@ -30,8 +30,12 @@ Tips: If you want to preview markdown file, you can install
     template for the day in the month and current year.
     * If there are `day`, `month`, `year` arguments, the command will insert
     template for the day in the month and the year.
-1. `:GotoToday` goto the  line of today in planning file, default map key is
-   `<leader>gt`.
+1. `:DiaryMonth [month]  [year]` insert the template of diary for a month.
+    * See `:PlanMonth`
+1. `:DiaryDay [day] [month] [year]` insert the template of diary for a day.
+    * See `:PlanDay`
+1. `:GotoToday` goto the line of today in planning/diary file, the default map
+   key is `<leader>gt`.
 
 ##Options
 1. `g:plan_file` the path of planning file, you can config this option in
