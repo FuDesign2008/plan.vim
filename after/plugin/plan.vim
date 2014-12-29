@@ -4,8 +4,6 @@
 "The plugin is a utility for making monthly plan in markdown.
 "
 
-
-
 if &cp || exists('g:plan_loaded')
     finish
 endif
@@ -171,26 +169,13 @@ endfunction
 "@param {Integer} year [optional] defautl is current year
 function! s:PlanInsertDay(...)
     "@see http://www.cplusplus.com/reference/ctime/strftime/
-    "for strftime()
-    "
-    "day of month, 1-31, or 01-31
-    let day = get(a:000, 0)
+    let day = get(a:000, 0, strftime('%d'))
+    let month = get(a:000, 1, strftime('%m'))
+    let year = get(a:000, 2, strftime('%Y'))
+
     let day = str2nr(day, 10)
-    if day == 0
-        let day = strftime('%d')
-    endif
-    "full month, 1-12 or 01-12
-    let month = get(a:000, 1)
     let month = str2nr(month, 10)
-    if month == 0
-        let month = strftime('%m')
-    endif
-    "full year, 2013
-    let year = get(a:000, 2)
     let year = str2nr(year, 10)
-    if year == 0
-        let year = strftime('%Y')
-    endif
 
     let content = s:GetDayContent(day, month, year, 0) . ';'
     let all_content = split(content, ';')
@@ -203,26 +188,13 @@ endfunction
 "@param {Integer} year [optional] defautl is current year
 function! s:DiaryInsertDay(...)
     "@see http://www.cplusplus.com/reference/ctime/strftime/
-    "for strftime()
-    "
-    "day of month, 1-31, or 01-31
-    let day = get(a:000, 0)
+    let day = get(a:000, 0, strftime('%d'))
+    let month = get(a:000, 1, strftime('%m'))
+    let year = get(a:000, 2, strftime('%Y'))
+
     let day = str2nr(day, 10)
-    if day == 0
-        let day = strftime('%d')
-    endif
-    "full month, 1-12 or 01-12
-    let month = get(a:000, 1)
     let month = str2nr(month, 10)
-    if month == 0
-        let month = strftime('%m')
-    endif
-    "full year, 2013
-    let year = get(a:000, 2)
     let year = str2nr(year, 10)
-    if year == 0
-        let year = strftime('%Y')
-    endif
 
     let content = s:GetDayContent(day, month, year, 1) . ';'
     let all_content = split(content, ';')
@@ -233,24 +205,16 @@ endfunction
 "@param {Integer} month [optional]  default is current month
 "@param {Integer} year [optional] defautl is current year
 function! s:PlanInsertMonth(...)
-    "full month, 04
-    let month = get(a:000, 0)
-    if month == 0
-        let month = strftime('%m')
-    endif
-    "full year, 2013
-    let year = get(a:000, 1)
-    if year == 0
-        let year = strftime('%Y')
-    endif
+    let month = get(a:000, 0, strftime('%m'))
+    let year = get(a:000, 1, strftime('%Y'))
 
-    let head = '#Plan of ' . year . '-' . month .';;'
+    let month = str2nr(month, 10)
+    let year = str2nr(year, 10)
+
+    let head = '#Plan of ' . year . '-' . s:PaddingTen(month) .';;'
     let head = head . ';##Work Targets;1.;'
     let head = head . ';##Personal Targets;1.;;'
     let head = head . ';##X Lab;1.;;'
-    " convert to integer
-    let year = year + 0
-    let month = month + 0
 
     let day31 = [1,3,5,7,8,10,12]
     let day30 = [4,6,9,11]
@@ -282,21 +246,13 @@ endfunction
 "@param {Integer} month [optional]  default is current month
 "@param {Integer} year [optional] defautl is current year
 function! s:DiaryInsertMonth(...)
-    "full month, 04
-    let month = get(a:000, 0)
-    if month == 0
-        let month = strftime('%m')
-    endif
-    "full year, 2013
-    let year = get(a:000, 1)
-    if year == 0
-        let year = strftime('%Y')
-    endif
+    let month = get(a:000, 0, strftime('%m'))
+    let year = get(a:000, 1, strftime('%Y'))
 
-    let head = '#Diary of ' . year . '-' . month .';;'
-    " convert to integer
-    let year = year + 0
-    let month = month + 0
+    let month = str2nr(month, 10)
+    let year = str2nr(year, 10)
+
+    let head = '#Diary of ' . year . '-' . s:PaddingTen(month) .';;'
 
     let day31 = [1,3,5,7,8,10,12]
     let day30 = [4,6,9,11]
@@ -332,10 +288,10 @@ endfunction
 
 command! -nargs=0 EditPlan call s:EditPlan()
 command! -nargs=0 EditPlanDir call s:EditPlanDir()
-command! -nargs=* PlanMonth call s:PlanInsertMonth('<args>')
-command! -nargs=* PlanDay call s:PlanInsertDay('<args>')
-command! -nargs=* DiaryMonth call s:DiaryInsertMonth('<args>')
-command! -nargs=* DiaryDay call s:DiaryInsertDay('<args>')
+command! -nargs=* PlanMonth call s:PlanInsertMonth(<f-args>)
+command! -nargs=* PlanDay call s:PlanInsertDay(<f-args>)
+command! -nargs=* DiaryMonth call s:DiaryInsertMonth(<f-args>)
+command! -nargs=* DiaryDay call s:DiaryInsertDay(<f-args>)
 command! -nargs=0 GotoToday call s:GotoToday()
 
 if !exists('g:plan_custom_keymap')
