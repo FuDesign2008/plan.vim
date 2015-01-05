@@ -12,8 +12,6 @@ let g:plan_loaded = 1
 let s:save_cpo = &cpo
 set cpo&vim
 
-let s:root_path = expand('<sfile>:p:h')
-let s:node_js_cmd = 'null'
 
 let s:plan_file = ''
 if exists('g:plan_file')
@@ -87,35 +85,21 @@ function! s:EditPlanDir()
 endfunction
 
 
+
+" to get the day of week
+" @see http://en.wikipedia.org/wiki/Determination_of_the_day_of_the_week
+" `Implementation-dependent methods of Sakamoto, Lachman, Keith and Craver`
 "
-function! s:joinPath(...)
-  let paths = join(a:000,'/')
-  let root = s:root_path
-  return root.'/'.paths
-endfunction
-
-"@param {String} full day, 01-31
-"@param {String} full month, 01-12
-"@param {String} full year
+"@param {Integer} day, 1-31
+"@param {Integer} month, 1-12
+"@param {Integer} full year
 "@return {Integer} 0-6
-function! s:GetWeekdayByNodeJs(day, month, year)
-    if s:node_js_cmd == 'null'
-        let filePath = s:joinPath('js', 'get_weekday.js')
-        if !filereadable(filePath)
-            return -1
-        endif
-        let s:node_js_cmd = 'node "'. filePath . '" "<DATE>"'
-    endif
-
-    let date = a:year . '-' . a:month . '-' . a:day
-    let cmd = substitute(s:node_js_cmd, '<DATE>', date, '')
-    let weekday_index = system(cmd)
-    if weekday_index == 'ERROR'
-        let weekday_index = -1
-    else
-        let weekday_index = weekday_index + 0
-    endif
-    return weekday_index
+function! s:DayOfWeek(day, month, year)
+    let month_map = [0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4]
+    let y = a:month < 3 ? (a:year - 1) : a:year
+    let m = get(month_map, a:month - 1)
+    let dayOfWeek =  (y + y/4 - y/100 + y/400 + m + a:day) % 7
+    return dayOfWeek
 endfunction
 
 " padding integer with zero if the integer is less than 10
@@ -135,7 +119,7 @@ endfunction
 "@return {String}
 function! s:GetDayContent(day, month, year, isDiary)
     let weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-    let weekIndex = s:GetWeekdayByNodeJs(a:day, a:month, a:year)
+    let weekIndex = s:DayOfWeek(a:day, a:month, a:year)
     let weekStr = get(weekdays, weekIndex, '')
     let month = s:PaddingTen(a:month)
     let fullDay = s:PaddingTen(a:day)

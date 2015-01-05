@@ -3,10 +3,9 @@ plan.vim
 A vim utility for making monthly plan, todo and so on in markdown.
 
 ##Install
-1. Install `node.js`.
 1. Copy the `plugin` folder to `~/.vim`.
 1. Config regular-task options in `.vimrc`.
-1. Use `:PlanMonth` commond to make plan.
+1. Use `:PlanMonth`/`:DiaryMonth` command to genernate plan/diary template for a month.
 
 Tips: If you want to preview markdown file, you can install
 [MarkdownViewer.vim](https://github.com/FuDesign2008/MarkdownViewer.vim).
@@ -76,4 +75,10 @@ let g:plan_month_personal = {
 ##Screenshot
 ![plan-vim.png](plan-vim.png)
 
+##Update
 
+* 2015-01-05
+    * remove the modules that depend on `node.js`
+
+* 2014-12-03
+    * add `:DiaryMonth`, `:DiaryDay` commands
