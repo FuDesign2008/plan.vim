@@ -4,8 +4,8 @@ A vim utility for making monthly plan, todo and so on in markdown.
 
 ##Install
 1. Copy the `plugin` folder to `~/.vim`.
-1. Config regular-task options in `.vimrc`.
-1. Use `:PlanMonth`/`:DiaryMonth` command to genernate plan/diary template for a month.
+1. Configure regular-task options in `.vimrc`.
+1. Use `:PlanMonth`/`:DiaryMonth` command to generate plan/diary template for a month.
 
 Tips: If you want to preview markdown file, you can install
 [MarkdownViewer.vim](https://github.com/FuDesign2008/MarkdownViewer.vim).
@@ -37,7 +37,7 @@ Tips: If you want to preview markdown file, you can install
    key is `<leader>gt`.
 
 ##Options
-1. `g:plan_file` the path of planning file, you can config this option in
+1. `g:plan_file` the path of planning file, you can configure this option in
 `.vimrc`.
 1. `g:plan_custom_keymap` custom to make key mapping or not, default value is
 `0`.
