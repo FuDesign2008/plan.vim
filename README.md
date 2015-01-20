@@ -11,9 +11,8 @@ Tips: If you want to preview markdown file, you can install
 [MarkdownViewer.vim](https://github.com/FuDesign2008/MarkdownViewer.vim).
 
 ##Usage
-1. `:EditPlan` open and edit planning file, default map key is `<leader>ep`.
-1. `:EditPlanDir` open and edit planning file directory, default map key is
-   `<leader>ed`.
+
+###Create Plan/Diary Template
 1. `:PlanMonth [month]  [year]` insert the template of plan for a month.
     * If there is no arguments, the command will insert the template for
     current month.
@@ -36,13 +35,20 @@ Tips: If you want to preview markdown file, you can install
 1. `:GotoToday` goto the line of today in planning/diary file, the default map
    key is `<leader>gt`.
 
-##Options
-1. `g:plan_file` the path of planning file, you can configure this option in
-`.vimrc`.
-1. `g:plan_custom_keymap` custom to make key mapping or not, default value is
-`0`.
+###Open Plan/Diary File
+1. `:EditPlan` open and edit planning file and goto the line of today.
+1. `:EditDiary` open and edit diary file and goto the line of today.
 
-###Regular Task
+##Options
+1. `g:p_plan_file` the path of planning file, you can configure this option in
+`.vimrc`.
+1. `g:p_diary_file` the path of planning file, you can configure this option in
+`.vimrc`.
+1. `g:p_change_dir` Change to directory or not when executing `:EditPlan` and
+   `:EditDiary` commands. The default value is `0`.
+1. `g:plan_custom_keymap` custom to make key mapping or not, default value is
+
+###Regular Plan Task
 1. `g:plan_month_work` regular work-task for every month.
 1. `g:plan_month_personal` regular personal-task for every month.
 1. `g:plan_week_work` regular work-task for every week.
@@ -77,8 +83,21 @@ let g:plan_month_personal = {
 
 ##Update
 
-* 2015-01-05
-    * remove the modules that depend on `node.js`
+###2015-01-20
+* REMOVE
+    - `:EditPlanDir` command
+    - default mapping keys for `:EditPlanDir` and `:EditPlan` commands
+* ADD
+    - `:EditDiary` command
+    - `g:p_diary_file`, `g:p_change_dir`
+* RENAME
+    - `g:plan_file` rename to `g:p_plan_file`
 
-* 2014-12-03
-    * add `:DiaryMonth`, `:DiaryDay` commands
+
+###2015-01-05
+* REMOVE
+    - the modules that depend on `node.js`
+
+###2014-12-03
+* ADD
+    - `:DiaryMonth`, `:DiaryDay` commands

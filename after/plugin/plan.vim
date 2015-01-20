@@ -14,9 +14,26 @@ set cpo&vim
 
 
 let s:plan_file = ''
-if exists('g:plan_file')
+if exists('g:p_plan_file')
+    let s:plan_file = g:p_plan_file
+elseif exists('g:plan_file')
+    "compatibility
     let s:plan_file = g:plan_file
 endif
+
+let s:diary_file = ''
+if exists('g:p_diary_file')
+    let s:diary_file = g:p_diary_file
+elseif exists('g:diary_file')
+    "compatibility
+    let s:diary_file = g:diary_file
+endif
+
+let s:change_dir = 0
+if exists('g:p_change_dir')
+    let s:change_dir = g:p_change_dir
+endif
+
 
 let s:planWeekWork = {}
 if exists('g:plan_week_work')
@@ -70,17 +87,41 @@ else
     let s:plan_dir = ''
 endif
 
+if filereadable(s:diary_file)
+    let s:diary_dir = s:GetDirectoryByFile(s:diary_file)
+    if !isdirectory(s:diary_dir)
+        let s:diary_file = ''
+        let s:diary_dir = ''
+    endif
+else
+    let s:diary_file = ''
+    let s:diary_dir = ''
+endif
+
+
+
 " open plan file to  edit
 function! s:EditPlan()
     if s:plan_file != ''
+        if s:change_dir
+            execute 'cd ' . s:plan_dir
+        endif
         execute 'edit '. s:plan_file
+        call s:GotoToday()
+    else
+        echomsg 'g:p_plan_file does not exist or is unvalid!'
     endif
 endfunction
 
-"open plan file's directory to edit
-function! s:EditPlanDir()
-    if s:plan_dir != ''
-        execute 'edit' . s:plan_dir
+function! s:EditDiary()
+    if s:diary_file != ''
+        if s:change_dir
+            execute 'cd ' . s:diary_dir
+        endif
+        execute 'edit ' . s:diary_file
+        call s:GotoToday()
+    else
+        echomsg 'g:p_diary_file does not exist or is unvalid!'
     endif
 endfunction
 
@@ -271,7 +312,8 @@ endfunction
 
 
 command! -nargs=0 EditPlan call s:EditPlan()
-command! -nargs=0 EditPlanDir call s:EditPlanDir()
+command! -nargs=0 EditDiary call s:EditDiary()
+"command! -nargs=0 EditPlanDir call s:EditPlanDir()
 command! -nargs=* PlanMonth call s:PlanInsertMonth(<f-args>)
 command! -nargs=* PlanDay call s:PlanInsertDay(<f-args>)
 command! -nargs=* DiaryMonth call s:DiaryInsertMonth(<f-args>)
@@ -279,8 +321,6 @@ command! -nargs=* DiaryDay call s:DiaryInsertDay(<f-args>)
 command! -nargs=0 GotoToday call s:GotoToday()
 
 if !exists('g:plan_custom_keymap')
-    nnoremap <leader>ep :EditPlan<CR>
-    nnoremap <leader>ed :EditPlanDir<CR>
     nnoremap <leader>gt :GotoToday<CR>
 endif
 
