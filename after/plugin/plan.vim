@@ -55,58 +55,15 @@ if exists('g:plan_month_personal')
     let s:planMonthPersonal = g:plan_month_personal
 endif
 
-" util
-" get the directory of the file
-" @param {String} file
-" @return {String}
-function! s:GetDirectoryByFile(file)
-    let slash_index = strridx(a:file, '/')
-
-    " try find `\` for windows
-    if slash_index == -1
-        let slash_index = strridx(a:file, '\')
-    endif
-
-    if slash_index == -1
-        return ''
-    endif
-
-    return strpart(a:file, 0, slash_index)
-endfunction
-
-
-" to check the variable about file
-if filereadable(s:plan_file)
-    let s:plan_dir = s:GetDirectoryByFile(s:plan_file)
-    if !isdirectory(s:plan_dir)
-        let s:plan_file = ''
-        let s:plan_dir = ''
-    endif
-else
-    let s:plan_file = ''
-    let s:plan_dir = ''
-endif
-
-if filereadable(s:diary_file)
-    let s:diary_dir = s:GetDirectoryByFile(s:diary_file)
-    if !isdirectory(s:diary_dir)
-        let s:diary_file = ''
-        let s:diary_dir = ''
-    endif
-else
-    let s:diary_file = ''
-    let s:diary_dir = ''
-endif
-
 
 
 " open plan file to  edit
 function! s:EditPlan()
     if s:plan_file != ''
         if s:change_dir
-            execute 'cd ' . s:plan_dir
+            execute 'cd ' . fnamemodify(s:plan_file, ':p:h')
         endif
-        execute 'edit '. s:plan_file
+        execute 'edit '. fnamemodify(s:plan_file, ':p:t')
         call s:GotoToday()
     else
         echomsg 'g:p_plan_file does not exist or is unvalid!'
@@ -116,9 +73,9 @@ endfunction
 function! s:EditDiary()
     if s:diary_file != ''
         if s:change_dir
-            execute 'cd ' . s:diary_dir
+            execute 'cd ' . fnamemodify(s:diary_file, ':p:h')
         endif
-        execute 'edit ' . s:diary_file
+        execute 'edit ' . fnamemodify(s:diary_file, ':p:t')
         call s:GotoToday()
     else
         echomsg 'g:p_diary_file does not exist or is unvalid!'
