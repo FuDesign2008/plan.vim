@@ -53,6 +53,8 @@ Tips: If you want to preview markdown file, you can install
 1. `g:plan_month_personal` regular personal-task for every month.
 1. `g:plan_week_work` regular work-task for every week.
 1. `g:plan_week_personal` regular personal-task for every week.
+1. `g:plan_year_work` regular work-task for every year.
+1. `g:plan_year_personal` regular personal-task for every year.
 
 Take my regular tasks configuration for example:
 
@@ -76,12 +78,22 @@ let g:plan_month_personal = {
     \ 28 : '1. 月度总结;1. 下月计划;'
     \}
 
+
+let g:plan_year_personal = {
+    \'01-18': '1. 收房租;',
+    \'04-18': '1. 收房租;'
+    \}
+
 ```
 
 ##Screenshot
 ![plan-vim.png](plan-vim.png)
 
 ##Update
+
+###2015-01-27
+* ADD
+    - `g:plan_year_work` and `g:plan_year_personal`
 
 ###2015-01-20
 * REMOVE

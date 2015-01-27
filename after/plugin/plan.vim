@@ -56,6 +56,19 @@ if exists('g:plan_month_personal')
 endif
 
 
+let s:planYearWork = {}
+if exists('g:plan_year_work')
+    let s:planYearWork = g:plan_year_work
+endif
+
+let s:planYearPersonal = {}
+if exists('g:plan_year_personal')
+    let s:planYearPersonal = g:plan_year_personal
+endif
+
+
+
+
 
 " open plan file to  edit
 function! s:EditPlan()
@@ -127,12 +140,16 @@ function! s:GetDayContent(day, month, year, isDiary)
         return content
     endif
 
+    let monthDay = month . '-' . fullDay
+
     "
     "work
     let content = content . '###Work;'
     let regularTasks = get(s:planWeekWork, weekIndex, '')
     let content = content . regularTasks
     let regularTasks = get(s:planMonthWork, a:day, '')
+    let content = content . regularTasks
+    let regularTasks = get(s:planYearWork, monthDay, '')
     let content = content . regularTasks . ';;'
 
     "personal
@@ -140,6 +157,8 @@ function! s:GetDayContent(day, month, year, isDiary)
     let regularTasks = get(s:planWeekPersonal, weekIndex, '')
     let content = content . regularTasks
     let regularTasks = get(s:planMonthPersonal, a:day, '')
+    let content = content . regularTasks
+    let regularTasks = get(s:planYearPersonal, monthDay, '')
     let content = content . regularTasks . ';;'
 
     return content
