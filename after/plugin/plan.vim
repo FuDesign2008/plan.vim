@@ -67,10 +67,25 @@ endif
 "@param {Boolean}  isPlan
 function! s:EditFile(filePath, changeDir, isPlan)
     if a:filePath != ''
-        if a:changeDir
-            execute 'cd ' . fnamemodify(a:filePath, ':p:h')
+        let dirPath = fnamemodify(a:filePath, ':p:h')
+        let cwdEqualTargetPath = getcwd() == dirPath
+
+        if a:changeDir && !cwdEqualTargetPath
+            execute 'cd ' . dirPath
+            let cwdEqualTargetPath = 1
         endif
-        execute 'edit '. fnamemodify(a:filePath, ':p:t')
+
+        let targetFileFullPath = fnamemodify(a:filePath, ':p')
+
+        if fnamemodify(expand('%'), ':p') != targetFileFullPath
+            if cwdEqualTargetPath
+                execute 'edit '. fnamemodify(a:filePath, ':p:t')
+            else
+                execute 'edit '. targetFileFullPath
+            endif
+        endif
+
+
         call s:GotoToday()
     else
         let varName = isPlan ? 'g:p_plan_file' : 'g:p_diary_file'
@@ -95,7 +110,7 @@ function! s:EditDiaryCwd()
 endfunction
 
 function! s:EditDiary()
-    call:EditFile(s:diary_file, 0, 0)
+    call s:EditFile(s:diary_file, 0, 0)
 endfunction
 
 
