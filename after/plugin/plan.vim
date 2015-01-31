@@ -82,19 +82,19 @@ endfunction
 
 
 " open plan file to  edit
-function! s:EditPlan()
+function! s:EditPlanCwd()
     call s:EditFile(s:plan_file, 1, 1)
 endfunction
 
-function! s:EditPlanWithoutChangeDir()
+function! s:EditPlan()
     call s:EditFile(s:plan_file, 0, 1)
 endfunction
 
-function! s:EditDiary()
+function! s:EditDiaryCwd()
     call s:EditFile(s:diary_file, 1, 0)
 endfunction
 
-function! s:EditDiaryWithoutChangeDir()
+function! s:EditDiary()
     call:EditFile(s:diary_file, 0, 0)
 endfunction
 
@@ -290,11 +290,11 @@ function! s:GotoToday()
 endfunction
 
 
+command!   -nargs=0   EditPlanCwd  call   s:EditPlanCwd()
 command!   -nargs=0   EditPlan     call   s:EditPlan()
-command!   -nargs=0   EditPn       call   s:EditPlanWithoutChangeDir()
 
+command!   -nargs=0   EditDiaryCwd call   s:EditDiaryCwd()
 command!   -nargs=0   EditDiary    call   s:EditDiary()
-command!   -nargs=0   EditDy       call   s:EditDiaryWithoutChangeDir()
 
 command!   -nargs=*   PlanMonth    call   s:PlanInsertMonth(<f-args>)
 command!   -nargs=*   PlanDay      call   s:PlanInsertDay(<f-args>)

@@ -36,12 +36,12 @@ Tips: If you want to preview markdown file, you can install
    key is `<leader>gt`.
 
 ###Open Plan/Diary File
-1. `:EditPlan` open and edit plan file with changing the current path to the
-   directory which the plan file is in.
-1. `:EditPn` open and editi plan file *without* changing the current path.
-1. `:EditDiary` open and edit diary file with changing the current path to the
-   directory which the diary file is in.
-1. `:EditDy` open and edit diary file *without* changing the current path.
+1. `:EditPlan` open and edit plan file.
+1. `:EditPlanCwd` open and editi plan file with changing the current working
+   directory.
+1. `:EditDiary` open and edit diary file.
+1. `:EditDiaryCwd` open and edit diary file with changing the current working
+   directory.
 
 ##Options
 1. `g:p_plan_file` the path of plan file, you can configure this option in
@@ -96,7 +96,7 @@ let g:plan_year_personal = {
 ###2015-01-31
 
 * ADD
-    - `:EditPn` and `:EditDy` command
+    - `:EditPlanCwd` and `:EditDiaryCwd` command
 * REMOVE
     - `g:p_change_dir`
 
