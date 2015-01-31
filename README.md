@@ -32,21 +32,23 @@ Tips: If you want to preview markdown file, you can install
     * See `:PlanMonth`
 1. `:DiaryDay [day] [month] [year]` insert the template of diary for a day.
     * See `:PlanDay`
-1. `:GotoToday` goto the line of today in planning/diary file, the default map
+1. `:GotoToday` goto the line of today in plan/diary file, the default map
    key is `<leader>gt`.
 
 ###Open Plan/Diary File
-1. `:EditPlan` open and edit planning file and goto the line of today.
-1. `:EditDiary` open and edit diary file and goto the line of today.
+1. `:EditPlan` open and edit plan file with changing the current path to the
+   directory which the plan file is in.
+1. `:EditPn` open and editi plan file *without* changing the current path.
+1. `:EditDiary` open and edit diary file with changing the current path to the
+   directory which the diary file is in.
+1. `:EditDy` open and edit diary file *without* changing the current path.
 
 ##Options
-1. `g:p_plan_file` the path of planning file, you can configure this option in
+1. `g:p_plan_file` the path of plan file, you can configure this option in
 `.vimrc`.
-1. `g:p_diary_file` the path of planning file, you can configure this option in
+1. `g:p_diary_file` the path of plan file, you can configure this option in
 `.vimrc`.
-1. `g:p_change_dir` Change to directory or not when executing `:EditPlan` and
-   `:EditDiary` commands. The default value is `0`.
-1. `g:plan_custom_keymap` custom to make key mapping or not, default value is
+1. `g:plan_custom_keymap` custom to make key mapping or not, default value is `0`.
 
 ###Regular Plan Task
 1. `g:plan_month_work` regular work-task for every month.
@@ -90,6 +92,13 @@ let g:plan_year_personal = {
 ![plan-vim.png](plan-vim.png)
 
 ##Update
+
+###2015-01-31
+
+* ADD
+    - `:EditPn` and `:EditDy` command
+* REMOVE
+    - `g:p_change_dir`
 
 ###2015-01-27
 * ADD

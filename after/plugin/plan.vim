@@ -29,10 +29,6 @@ elseif exists('g:diary_file')
     let s:diary_file = g:diary_file
 endif
 
-let s:change_dir = 0
-if exists('g:p_change_dir')
-    let s:change_dir = g:p_change_dir
-endif
 
 
 let s:planWeekWork = {}
@@ -66,33 +62,40 @@ if exists('g:plan_year_personal')
     let s:planYearPersonal = g:plan_year_personal
 endif
 
+"@param {String}   filePath
+"@param {Boolean}  changeDir
+"@param {Boolean}  isPlan
+function! s:EditFile(filePath, changeDir, isPlan)
+    if a:filePath != ''
+        if a:changeDir
+            execute 'cd ' . fnamemodify(a:filePath, ':p:h')
+        endif
+        execute 'edit '. fnamemodify(a:filePath, ':p:t')
+        call s:GotoToday()
+    else
+        let varName = isPlan ? 'g:p_plan_file' : 'g:p_diary_file'
+        echomsg  varName . ' does not exist or is unvalid!'
+    endif
 
+endfunction
 
 
 
 " open plan file to  edit
 function! s:EditPlan()
-    if s:plan_file != ''
-        if s:change_dir
-            execute 'cd ' . fnamemodify(s:plan_file, ':p:h')
-        endif
-        execute 'edit '. fnamemodify(s:plan_file, ':p:t')
-        call s:GotoToday()
-    else
-        echomsg 'g:p_plan_file does not exist or is unvalid!'
-    endif
+    call s:EditFile(s:plan_file, 1, 1)
+endfunction
+
+function! s:EditPlanWithoutChangeDir()
+    call s:EditFile(s:plan_file, 0, 1)
 endfunction
 
 function! s:EditDiary()
-    if s:diary_file != ''
-        if s:change_dir
-            execute 'cd ' . fnamemodify(s:diary_file, ':p:h')
-        endif
-        execute 'edit ' . fnamemodify(s:diary_file, ':p:t')
-        call s:GotoToday()
-    else
-        echomsg 'g:p_diary_file does not exist or is unvalid!'
-    endif
+    call s:EditFile(s:diary_file, 1, 0)
+endfunction
+
+function! s:EditDiaryWithoutChangeDir()
+    call:EditFile(s:diary_file, 0, 0)
 endfunction
 
 
@@ -287,14 +290,20 @@ function! s:GotoToday()
 endfunction
 
 
-command! -nargs=0 EditPlan call s:EditPlan()
-command! -nargs=0 EditDiary call s:EditDiary()
-"command! -nargs=0 EditPlanDir call s:EditPlanDir()
-command! -nargs=* PlanMonth call s:PlanInsertMonth(<f-args>)
-command! -nargs=* PlanDay call s:PlanInsertDay(<f-args>)
-command! -nargs=* DiaryMonth call s:DiaryInsertMonth(<f-args>)
-command! -nargs=* DiaryDay call s:DiaryInsertDay(<f-args>)
-command! -nargs=0 GotoToday call s:GotoToday()
+command!   -nargs=0   EditPlan     call   s:EditPlan()
+command!   -nargs=0   EditPn       call   s:EditPlanWithoutChangeDir()
+
+command!   -nargs=0   EditDiary    call   s:EditDiary()
+command!   -nargs=0   EditDy       call   s:EditDiaryWithoutChangeDir()
+
+command!   -nargs=*   PlanMonth    call   s:PlanInsertMonth(<f-args>)
+command!   -nargs=*   PlanDay      call   s:PlanInsertDay(<f-args>)
+
+command!   -nargs=*   DiaryMonth   call   s:DiaryInsertMonth(<f-args>)
+command!   -nargs=*   DiaryDay     call   s:DiaryInsertDay(<f-args>)
+
+command!   -nargs=0   GotoToday    call   s:GotoToday()
+
 
 if !exists('g:plan_custom_keymap')
     nnoremap <leader>gt :GotoToday<CR>
