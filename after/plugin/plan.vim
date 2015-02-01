@@ -73,7 +73,7 @@ function! s:EditFile(filePath, changeDir, isPlan)
         execute 'edit '. fnamemodify(a:filePath, ':p:t')
         call s:GotoToday()
     else
-        let varName = isPlan ? 'g:p_plan_file' : 'g:p_diary_file'
+        let varName = a:isPlan ? 'g:p_plan_file' : 'g:p_diary_file'
         echomsg  varName . ' does not exist or is unvalid!'
     endif
 
