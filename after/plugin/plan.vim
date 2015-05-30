@@ -220,6 +220,27 @@ function! s:DiaryInsertDay(...)
     let failed = append(line('.'), all_content)
 endfunction
 
+
+function! s:ComputeDayCount(year, month)
+    let day31 = [1,3,5,7,8,10,12]
+    let day30 = [4,6,9,11]
+
+    let days = 28
+    if index(day31, a:month) > -1
+        let days = 31
+    elseif index(day30, a:month) > -1
+        let days = 30
+    elseif a:month == 2
+        let isLeapYear = (a:year % 4 == 0 && a:year % 100 != 0) || (a:year % 400 == 0)
+        if isLeapYear
+            let days = 29
+        endif
+    endif
+
+    return days
+
+endfunction
+
 "when editing plan file, insert all the template of a month
 "@param {Integer} month [optional]  default is current month
 "@param {Integer} year [optional] defautl is current year
@@ -235,16 +256,7 @@ function! s:PlanInsertMonth(...)
     let head = head . ';##Personal Targets;1.;;'
     let head = head . ';##X Lab;1.;;'
 
-    let day31 = [1,3,5,7,8,10,12]
-    let day30 = [4,6,9,11]
-
-    let days = 28
-    if index(day31, month) > -1
-        let days = 31
-    elseif index(day30, month) > -1
-        let days = 30
-    endif
-
+    let days = s:ComputeDayCount(year, month)
     let counter = 1
     let content = ''
     while counter <= days
@@ -273,16 +285,7 @@ function! s:DiaryInsertMonth(...)
 
     let head = '#Diary of ' . year . '-' . s:PaddingTen(month) .';;'
 
-    let day31 = [1,3,5,7,8,10,12]
-    let day30 = [4,6,9,11]
-
-    let days = 28
-    if index(day31, month) > -1
-        let days = 31
-    elseif index(day30, month) > -1
-        let days = 30
-    endif
-
+    let days = s:ComputeDayCount(year, month)
     let counter = 1
     let content = ''
     while counter <= days
