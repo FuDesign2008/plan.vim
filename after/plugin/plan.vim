@@ -150,15 +150,15 @@ function! s:GetDayContent(day, month, year, isDiary)
     let weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
     let weekIndex = s:DayOfWeek(a:day, a:month, a:year)
     let weekStr = get(weekdays, weekIndex, '')
-    let month = s:PaddingTen(a:month)
+    let fullMonth = s:PaddingTen(a:month)
     let fullDay = s:PaddingTen(a:day)
-    let content = '##' . a:year . '-' . month . '-' . fullDay . ' ' . weekStr .';;'
+    let content = '##' . a:year . '-' . fullMonth . '-' . fullDay . ' ' . weekStr .';;'
 
     if a:isDiary
         return content
     endif
 
-    let monthDay = month . '-' . fullDay
+    let monthDay = fullMonth . '-' . fullDay
 
     "
     "work

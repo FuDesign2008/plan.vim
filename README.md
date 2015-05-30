@@ -91,7 +91,12 @@ let g:plan_year_personal = {
 ##Screenshot
 ![plan-vim.png](plan-vim.png)
 
-##Update
+##Change Log
+
+
+###2015-05-31
+* Leap year support
+
 
 ###2015-01-31
 
