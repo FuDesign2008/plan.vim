@@ -152,7 +152,7 @@ function! s:GetDayContent(day, month, year, isDiary)
     let weekStr = get(weekdays, weekIndex, '')
     let fullMonth = s:PaddingTen(a:month)
     let fullDay = s:PaddingTen(a:day)
-    let content = '##' . a:year . '-' . fullMonth . '-' . fullDay . ' ' . weekStr .';;'
+    let content = '## ' . a:year . '-' . fullMonth . '-' . fullDay . ' ' . weekStr .';;'
 
     if a:isDiary
         return content
@@ -162,7 +162,7 @@ function! s:GetDayContent(day, month, year, isDiary)
 
     "
     "work
-    let content = content . '###Work;'
+    let content = content . '### Work;'
     let regularTasks = get(s:planWeekWork, weekIndex, '')
     let content = content . regularTasks
     let regularTasks = get(s:planMonthWork, a:day, '')
@@ -171,7 +171,7 @@ function! s:GetDayContent(day, month, year, isDiary)
     let content = content . regularTasks . ';;'
 
     "personal
-    let content = content . '###Personal;'
+    let content = content . '### Personal;'
     let regularTasks = get(s:planWeekPersonal, weekIndex, '')
     let content = content . regularTasks
     let regularTasks = get(s:planMonthPersonal, a:day, '')
@@ -251,10 +251,10 @@ function! s:PlanInsertMonth(...)
     let month = str2nr(month, 10)
     let year = str2nr(year, 10)
 
-    let head = '#Plan of ' . year . '-' . s:PaddingTen(month) .';;'
-    let head = head . ';##Work Targets;1.;'
-    let head = head . ';##Personal Targets;1.;;'
-    let head = head . ';##X Lab;1.;;'
+    let head = '# Plan of ' . year . '-' . s:PaddingTen(month) .';;'
+    let head = head . ';## Work Targets;1.;'
+    let head = head . ';## Personal Targets;1.;;'
+    let head = head . ';## X Lab;1.;;'
 
     let days = s:ComputeDayCount(year, month)
     let counter = 1
@@ -283,7 +283,7 @@ function! s:DiaryInsertMonth(...)
     let month = str2nr(month, 10)
     let year = str2nr(year, 10)
 
-    let head = '#Diary of ' . year . '-' . s:PaddingTen(month) .';;'
+    let head = '# Diary of ' . year . '-' . s:PaddingTen(month) .';;'
 
     let days = s:ComputeDayCount(year, month)
     let counter = 1
@@ -303,7 +303,7 @@ function! s:DiaryInsertMonth(...)
 endfunction
 
 function! s:GotoToday()
-    let str = '##' . strftime('%Y') . '-' . strftime('%m') . '-' .strftime('%d')
+    let str = '## ' . strftime('%Y') . '-' . strftime('%m') . '-' .strftime('%d')
     execute '/'. str
 endfunction
 
