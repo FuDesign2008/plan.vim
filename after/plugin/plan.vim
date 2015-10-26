@@ -253,10 +253,16 @@ function! s:PlanInsertMonth(...)
 
     let head = '# Plan of ' . year . '-' . s:PaddingTen(month) .';;'
     let head = head . ';## Targets;;'
-    let head = head . ';### Invest & Finace;1. 定性: 定量;'
-    let head = head . ';### Enjoy Life;1. 定性: 定量;'
-    let head = head . ';### Tech & Managment;1. 定性: 定量;'
-    let head = head . ';### Work;1. 定性: 定量;'
+    let head = head . '[SMART](https://en.wikipedia.org/wiki/SMART_criteria);'
+    let head = head . '* Specific: What, Why, Who, Where, Which;'
+    let head = head . '* Measurable;'
+    let head = head . '* Achieveable;'
+    let head = head . '* Relavant;'
+    let head = head . '* Time-bound;'
+    let head = head . ';### Invest & Finace;1. ;'
+    let head = head . ';### Enjoy Life;1. ;'
+    let head = head . ';### Tech & Managment;1. ;'
+    let head = head . ';### Work;1. ;'
 
     let days = s:ComputeDayCount(year, month)
     let counter = 1
