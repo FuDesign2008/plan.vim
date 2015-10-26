@@ -252,9 +252,11 @@ function! s:PlanInsertMonth(...)
     let year = str2nr(year, 10)
 
     let head = '# Plan of ' . year . '-' . s:PaddingTen(month) .';;'
-    let head = head . ';## Work Targets;1.;'
-    let head = head . ';## Personal Targets;1.;;'
-    let head = head . ';## X Lab;1.;;'
+    let head = head . ';## Targets;;'
+    let head = head . ';### Invest & Finace;1. 定性: 定量;'
+    let head = head . ';### Enjoy Life;1. 定性: 定量;'
+    let head = head . ';### Tech & Managment;1. 定性: 定量;'
+    let head = head . ';### Work;1. 定性: 定量;'
 
     let days = s:ComputeDayCount(year, month)
     let counter = 1
