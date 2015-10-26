@@ -263,6 +263,7 @@ function! s:PlanInsertMonth(...)
     let head = head . '1. (Invest & Finance): ;'
     let head = head . '1. (Enjoy Life): ;'
     let head = head . '1. (Tech & Managment): ;'
+    let head = head . ';'
 
     let days = s:ComputeDayCount(year, month)
     let counter = 1
