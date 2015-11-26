@@ -113,4 +113,4 @@ let g:plan_year_personal = {
     - REMOVE the modules that depend on `node.js`
 
 * 2014-12-03
-    -ADD `:DiaryMonth`, `:DiaryDay` commands
+    - ADD `:DiaryMonth`, `:DiaryDay` commands
