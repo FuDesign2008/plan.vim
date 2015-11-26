@@ -93,37 +93,24 @@ let g:plan_year_personal = {
 
 ##Change Log
 
+* 2015-05-31
+    - Leap year support
 
-###2015-05-31
-* Leap year support
+* 2015-01-31
+    - ADD `:EditPlanCwd` and `:EditDiaryCwd` command
+    - REMOVE `g:p_change_dir`
 
+* 2015-01-27
+    - ADD `g:plan_year_work` and `g:plan_year_personal`
 
-###2015-01-31
+* 2015-01-20
+    - REMOVE `:EditPlanDir` command
+    - REMOVE default mapping keys for `:EditPlanDir` and `:EditPlan` commands
+    - ADD `:EditDiary` command, `g:p_diary_file`, `g:p_change_dir`
+    - RENAME `g:plan_file` rename to `g:p_plan_file`
 
-* ADD
-    - `:EditPlanCwd` and `:EditDiaryCwd` command
-* REMOVE
-    - `g:p_change_dir`
+* 2015-01-05
+    - REMOVE the modules that depend on `node.js`
 
-###2015-01-27
-* ADD
-    - `g:plan_year_work` and `g:plan_year_personal`
-
-###2015-01-20
-* REMOVE
-    - `:EditPlanDir` command
-    - default mapping keys for `:EditPlanDir` and `:EditPlan` commands
-* ADD
-    - `:EditDiary` command
-    - `g:p_diary_file`, `g:p_change_dir`
-* RENAME
-    - `g:plan_file` rename to `g:p_plan_file`
-
-
-###2015-01-05
-* REMOVE
-    - the modules that depend on `node.js`
-
-###2014-12-03
-* ADD
-    - `:DiaryMonth`, `:DiaryDay` commands
+* 2014-12-03
+    -ADD `:DiaryMonth`, `:DiaryDay` commands
