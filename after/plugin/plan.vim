@@ -314,7 +314,7 @@ endfunction
 function! s:GotoToday()
     let str = '## ' . strftime('%Y') . '-' . strftime('%m') . '-' .strftime('%d')
     execute '/'. str
-    execute 'z.'
+    execute 'normal z.'
 endfunction
 
 
