@@ -13,20 +13,12 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 
-let s:plan_file = ''
-if exists('g:p_plan_file')
-    let s:plan_file = g:p_plan_file
-elseif exists('g:plan_file')
-    "compatibility
-    let s:plan_file = g:plan_file
+"compatibility
+if exists('g:plan_file') && !exists('g:p_plan_file')
+    let g:p_plan_file = g:plan_file
 endif
-
-let s:diary_file = ''
-if exists('g:p_diary_file')
-    let s:diary_file = g:p_diary_file
-elseif exists('g:diary_file')
-    "compatibility
-    let s:diary_file = g:diary_file
+if exists('g:diary_file') && !exists('g:p_diary_file')
+    let g:p_diary_file = g:diary_file
 endif
 
 
@@ -62,11 +54,22 @@ if exists('g:plan_year_personal')
     let s:planYearPersonal = g:plan_year_personal
 endif
 
-"@param {String}   filePath
+"@param {String}  type
 "@param {Boolean}  changeDir
-"@param {Boolean}  isPlan
-function! s:EditFile(filePath, changeDir, isPlan)
-    if a:filePath != ''
+function! s:EditFile(type, changeDir)
+
+    let filePath = 'g:p_' . a:type . '_file';
+
+    if exists(filePath)
+
+        if isdirectory(filePath)
+            if a:changeDir
+                execute 'cd ' . filePath
+            endif
+            execute 'edit ' . filePath
+            return
+        endif
+
         let dirPath = fnamemodify(a:filePath, ':p:h')
         let cwdEqualTargetPath = getcwd() == dirPath
 
@@ -75,42 +78,50 @@ function! s:EditFile(filePath, changeDir, isPlan)
             let cwdEqualTargetPath = 1
         endif
 
-        let targetFileFullPath = fnamemodify(a:filePath, ':p')
+        let targetFileFullPath = fnamemodify(filePath, ':p')
 
         if fnamemodify(expand('%'), ':p') != targetFileFullPath
             if cwdEqualTargetPath
-                execute 'edit '. fnamemodify(a:filePath, ':p:t')
+                execute 'edit '. fnamemodify(filePath, ':p:t')
             else
                 execute 'edit '. targetFileFullPath
             endif
         endif
 
-
-        call s:GotoToday()
+        if a:type == 'plan' || a:type == 'diary'
+            call s:GotoToday()
+        endif
     else
-        let varName = a:isPlan ? 'g:p_plan_file' : 'g:p_diary_file'
         echomsg  varName . ' does not exist or is unvalid!'
     endif
 
 endfunction
 
 
+function! s:PEdit(type)
+    call s:EditFile(a:type, 0)
+endfunction
+
+function! s:PEditCwd(type)
+    call s:EditFile(a:type, 1)
+endfunction
+
 
 " open plan file to  edit
 function! s:EditPlanCwd()
-    call s:EditFile(s:plan_file, 1, 1)
+    call s:PEditCwd('plan')
 endfunction
 
 function! s:EditPlan()
-    call s:EditFile(s:plan_file, 0, 1)
+    call s:PEdit('plan')
 endfunction
 
 function! s:EditDiaryCwd()
-    call s:EditFile(s:diary_file, 1, 0)
+    call s:PEditCwd('diary')
 endfunction
 
 function! s:EditDiary()
-    call s:EditFile(s:diary_file, 0, 0)
+    call s:PEdit('diary')
 endfunction
 
 
@@ -317,6 +328,9 @@ function! s:GotoToday()
     execute 'normal z.'
 endfunction
 
+
+command!   -nargs=1   PEditCwd     call   s:PEditCwd(<f-args>)
+command!   -nargs=1   PEdit        call   s:PEdit(<f-args>)
 
 command!   -nargs=0   EditPlanCwd  call   s:EditPlanCwd()
 command!   -nargs=0   EditPlan     call   s:EditPlan()

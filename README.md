@@ -37,7 +37,7 @@ Tips: If you want to preview markdown file, you can install
 
 ###Open Plan/Diary File
 1. `:EditPlan` open and edit plan file.
-1. `:EditPlanCwd` open and editi plan file with changing the current working
+1. `:EditPlanCwd` open and edit plan file with changing the current working
    directory.
 1. `:EditDiary` open and edit diary file.
 1. `:EditDiaryCwd` open and edit diary file with changing the current working
@@ -88,10 +88,23 @@ let g:plan_year_personal = {
 
 ```
 
+## Open Other File/Directory
+1. `:PEdit <type>` open and edit `g:p_<type>_file` file or directory
+1. `:PEditCwd <type>` open and edit `g:p_<type>_file` file or directory with changing the current directory
+
+The `:EditPlan` command is equal `:PEdit plan` and `:EditPlanCwd` is equal to `:PEditCwd plan`.
+
+You can set  `g:p_<type>_file` in `.vimrc`.
+
+
+
 ##Screenshot
 ![plan-vim.png](plan-vim.png)
 
 ##Change Log
+
+* 2015-12-28
+    - ADD `:PEdit` and `:PEditCwd`
 
 * 2015-05-31
     - Leap year support
