@@ -12,13 +12,20 @@ let g:plan_loaded = 1
 let s:save_cpo = &cpo
 set cpo&vim
 
+if !exists('g:p_edit_files')
+    let g:p_edit_files = {}
+endif
 
 "compatibility
-if exists('g:plan_file') && !exists('g:p_plan_file')
-    let g:p_plan_file = g:plan_file
+if exists('g:p_plan_file')
+    let g:p_edit_files['plan'] = g:p_plan_file
+elseif exists('g:plan_file')
+    let g:p_edit_files['plan'] = g:plan_file
 endif
-if exists('g:diary_file') && !exists('g:p_diary_file')
-    let g:p_diary_file = g:diary_file
+if exists('g:p_diary_file')
+    let g:p_edit_files['diray'] = g:p_diray_file
+elseif exists('g:diary_file')
+    let g:p_edit_files['diray'] = g:diray_file
 endif
 
 
@@ -58,10 +65,9 @@ endif
 "@param {Boolean}  changeDir
 function! s:EditFile(type, changeDir)
 
-    let filePath = 'g:p_' . a:type . '_file';
+    let filePath = get(g:p_edit_files, a:type, '')
 
-    if exists(filePath)
-
+    if len(filePath) > 1
         if isdirectory(filePath)
             if a:changeDir
                 execute 'cd ' . filePath
@@ -70,7 +76,7 @@ function! s:EditFile(type, changeDir)
             return
         endif
 
-        let dirPath = fnamemodify(a:filePath, ':p:h')
+        let dirPath = fnamemodify(filePath, ':p:h')
         let cwdEqualTargetPath = getcwd() == dirPath
 
         if a:changeDir && !cwdEqualTargetPath
