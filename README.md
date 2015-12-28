@@ -37,18 +37,24 @@ Tips: If you want to preview markdown file, you can install
 
 ###Open Plan/Diary File
 1. `:EditPlan` open and edit plan file.
-1. `:EditPlanCwd` open and editi plan file with changing the current working
+1. `:EditPlanCwd` open and edit plan file with changing the current working
    directory.
 1. `:EditDiary` open and edit diary file.
 1. `:EditDiaryCwd` open and edit diary file with changing the current working
    directory.
 
 ##Options
-1. `g:p_plan_file` the path of plan file, you can configure this option in
-`.vimrc`.
-1. `g:p_diary_file` the path of plan file, you can configure this option in
-`.vimrc`.
 1. `g:plan_custom_keymap` custom to make key mapping or not, default value is `0`.
+1. `g:p_edit_files` the files that can be edit.
+
+```
+
+let g:p_edit_files = {
+    \ 'plan': 'the/path/to/plan/file/or/directory',
+    \ 'diary': 'the/path/to/diary/file/or/directory'
+    \}
+
+```
 
 ###Regular Plan Task
 1. `g:plan_month_work` regular work-task for every month.
@@ -88,10 +94,23 @@ let g:plan_year_personal = {
 
 ```
 
+## Open Other File/Directory
+1. `:PEdit <type>` open and edit `g:p_edit_files[<type>]` file or directory
+1. `:PEditCwd <type>` open and edit `g:p_edit_files[<type>]` file or directory with changing the current directory
+
+The `:EditPlan` command is equal `:PEdit plan` and `:EditPlanCwd` is equal to `:PEditCwd plan`.
+
+You can set  `g:p_edit_files` in `.vimrc`.
+
+
 ##Screenshot
 ![plan-vim.png](plan-vim.png)
 
 ##Change Log
+
+* 2015-12-28
+    - ADD `:PEdit`, `:PEditCwd`, `g:p_edit_files`
+    - REMOVE `g:p_plan_file`, `g:p_diary_file`
 
 * 2015-05-31
     - Leap year support
