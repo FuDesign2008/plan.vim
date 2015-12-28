@@ -23,9 +23,9 @@ elseif exists('g:plan_file')
     let g:p_edit_files['plan'] = g:plan_file
 endif
 if exists('g:p_diary_file')
-    let g:p_edit_files['diray'] = g:p_diray_file
+    let g:p_edit_files['diary'] = g:p_diary_file
 elseif exists('g:diary_file')
-    let g:p_edit_files['diray'] = g:diray_file
+    let g:p_edit_files['diary'] = g:diary_file
 endif
 
 
