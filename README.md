@@ -108,6 +108,9 @@ You can set  `g:p_edit_files` in `.vimrc`.
 
 ##Change Log
 
+* 2016-04-05
+    - ADD key point of day
+
 * 2015-12-28
     - ADD `:PEdit`, `:PEditCwd`, `g:p_edit_files`
     - REMOVE `g:p_plan_file`, `g:p_diary_file`
