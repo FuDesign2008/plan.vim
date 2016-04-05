@@ -196,7 +196,7 @@ function! s:GetDayContent(day, month, year, isDiary)
     let regularTasks = get(s:planYearPersonal, monthDay, '')
     let content = content . regularTasks . ';;'
 
-    if weekStr == 'Sat'
+    if weekStr == 'Sun'
         let content = content . '## Key Point of Week;'
         let content = content . '1. ;'
         let content = content . ';;'
