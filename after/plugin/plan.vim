@@ -203,9 +203,9 @@ function! s:GetDayContent(day, month, year, isDiary)
     let regularTasks = get(s:planYearPersonal, monthDay, '')
     let content = content . regularTasks . ';;'
 
-    " weekly summery
+    " weekly review
     if weekStr == 'Sun'
-        let content = content . '## Weekly Summery;'
+        let content = content . '## Weekly Review;'
         let content = content . '1. ;'
         let content = content . ';;'
     endif
@@ -304,7 +304,7 @@ function! s:PlanInsertMonth(...)
         let counter += 1
     endwhile
 
-    let footer = '## Month Summery;'
+    let footer = '## Month Review;'
     let footer = footer . '1.;'
     let footer = footer . ';;'
 
