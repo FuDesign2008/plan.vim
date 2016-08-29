@@ -169,15 +169,22 @@ function! s:GetDayContent(day, month, year, isDiary)
     let weekStr = get(weekdays, weekIndex, '')
     let fullMonth = s:PaddingTen(a:month)
     let fullDay = s:PaddingTen(a:day)
-    let content = '## ' . a:year . '-' . fullMonth . '-' . fullDay . ' ' . weekStr .';;'
+    let monthDay = fullMonth . '-' . fullDay
+    let content = ''
 
     if a:isDiary
         return content
     endif
 
-    let monthDay = fullMonth . '-' . fullDay
+    " key of week
+    if weekStr == 'Mon'
+        let content = content . '## Key Point of Week;'
+        let content = content . '1. ;'
+        let content = content . ';;'
+    endif
 
-    "
+    let content = content . '## ' . a:year . '-' . fullMonth . '-' . fullDay . ' ' . weekStr .';;'
+
     "work
     let content = content . '### Work;'
     let regularTasks = get(s:planWeekWork, weekIndex, '')
@@ -196,8 +203,9 @@ function! s:GetDayContent(day, month, year, isDiary)
     let regularTasks = get(s:planYearPersonal, monthDay, '')
     let content = content . regularTasks . ';;'
 
+    " weekly summery
     if weekStr == 'Sun'
-        let content = content . '## Key Point of Week;'
+        let content = content . '## Weekly Summery;'
         let content = content . '1. ;'
         let content = content . ';;'
     endif
@@ -274,19 +282,19 @@ function! s:PlanInsertMonth(...)
     let month = str2nr(month, 10)
     let year = str2nr(year, 10)
 
-    let head = '# Plan of ' . year . '-' . s:PaddingTen(month) .';;'
-    let head = head . '[SMART](https://en.wikipedia.org/wiki/SMART_criteria);;'
-    let head = head . '* Specific: What, Why, Who, Where, Which;'
-    let head = head . '* Measurable;'
-    let head = head . '* Achieveable;'
-    let head = head . '* Relavant;'
-    let head = head . '* Time-bound;'
-    let head = head . ';## Work Targets;1. ;'
-    let head = head . ';## Personal Targets;'
-    let head = head . '1. (Invest & Finance): ;'
-    let head = head . '1. (Enjoy Life): ;'
-    let head = head . '1. (Tech & Managment): ;'
-    let head = head . ';'
+    let header = '# Plan of ' . year . '-' . s:PaddingTen(month) .';;'
+    let header = header . '[SMART](https://en.wikipedia.org/wiki/SMART_criteria);;'
+    let header = header . '* Specific: What, Why, Who, Where, Which;'
+    let header = header . '* Measurable;'
+    let header = header . '* Achieveable;'
+    let header = header . '* Relavant;'
+    let header = header . '* Time-bound;'
+    let header = header . ';## Work Targets;1. ;'
+    let header = header . ';## Personal Targets;'
+    let header = header . '1. (Invest & Finance): ;'
+    let header = header . '1. (Enjoy Life): ;'
+    let header = header . '1. (Tech & Managment): ;'
+    let header = header . ';'
 
     let days = s:ComputeDayCount(year, month)
     let counter = 1
@@ -296,7 +304,11 @@ function! s:PlanInsertMonth(...)
         let counter += 1
     endwhile
 
-    let content = head . content
+    let footer = '## Month Summery;'
+    let footer = footer . '1.;'
+    let footer = footer . ';;'
+
+    let content = header . content . footer
     let all_content = split(content, ';')
     let failed = append(line('.'), all_content)
     if failed
@@ -315,7 +327,7 @@ function! s:DiaryInsertMonth(...)
     let month = str2nr(month, 10)
     let year = str2nr(year, 10)
 
-    let head = '# Diary of ' . year . '-' . s:PaddingTen(month) .';;'
+    let header = '# Diary of ' . year . '-' . s:PaddingTen(month) .';;'
 
     let days = s:ComputeDayCount(year, month)
     let counter = 1
@@ -325,7 +337,7 @@ function! s:DiaryInsertMonth(...)
         let counter += 1
     endwhile
 
-    let content = head . content
+    let content = header . content
     let all_content = split(content, ';')
     let failed = append(line('.'), all_content)
     if failed
