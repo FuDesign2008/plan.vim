@@ -304,7 +304,7 @@ function! s:PlanInsertMonth(...)
         let counter += 1
     endwhile
 
-    let footer = '## Month Review;'
+    let footer = '## Monthly Review;'
     let footer = footer . '1.;'
     let footer = footer . ';;'
 
