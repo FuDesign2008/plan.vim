@@ -94,11 +94,11 @@ function! s:EditFile(type, changeDir)
             endif
         endif
 
-        if a:type == 'plan' || a:type == 'diary'
+        if a:type ==# 'plan' || a:type ==# 'diary'
             call s:GotoToday()
         endif
     else
-        echomsg  varName . ' does not exist or is unvalid!'
+        echomsg  filePath . ' does not exist or is unvalid!'
     endif
 
 endfunction
@@ -177,7 +177,7 @@ function! s:GetDayContent(day, month, year, isDiary)
     endif
 
     " key of week
-    if weekStr == 'Mon'
+    if weekStr ==# 'Mon'
         let content = content . '## Key Point of Week;'
         let content = content . '1. ;'
         let content = content . ';;'
@@ -204,7 +204,7 @@ function! s:GetDayContent(day, month, year, isDiary)
     let content = content . regularTasks . ';;'
 
     " weekly review
-    if weekStr == 'Sun'
+    if weekStr ==# 'Sun'
         let content = content . '## Weekly Review;'
         let content = content . '1. ;'
         let content = content . ';;'
