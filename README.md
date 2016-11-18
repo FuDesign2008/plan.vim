@@ -2,7 +2,7 @@ plan.vim
 =========
 A vim utility for making monthly plan, todo and so on in markdown.
 
-##Install
+## Install
 1. Copy the `plugin` folder to `~/.vim`.
 1. Configure regular-task options in `.vimrc`.
 1. Use `:PlanMonth`/`:DiaryMonth` command to generate plan/diary template for a month.
@@ -10,9 +10,9 @@ A vim utility for making monthly plan, todo and so on in markdown.
 Tips: If you want to preview markdown file, you can install
 [MarkdownViewer.vim](https://github.com/FuDesign2008/MarkdownViewer.vim).
 
-##Usage
+## Usage
 
-###Create Plan/Diary Template
+### Create Plan/Diary Template
 1. `:PlanMonth [month]  [year]` insert the template of plan for a month.
     * If there is no arguments, the command will insert the template for
     current month.
@@ -35,7 +35,7 @@ Tips: If you want to preview markdown file, you can install
 1. `:GotoToday` goto the line of today in plan/diary file, the default map
    key is `<leader>gt`.
 
-###Open Plan/Diary File
+### Open Plan/Diary File
 1. `:EditPlan` open and edit plan file.
 1. `:EditPlanCwd` open and edit plan file with changing the current working
    directory.
@@ -43,7 +43,7 @@ Tips: If you want to preview markdown file, you can install
 1. `:EditDiaryCwd` open and edit diary file with changing the current working
    directory.
 
-##Options
+## Options
 1. `g:plan_custom_keymap` custom to make key mapping or not, default value is `0`.
 1. `g:p_edit_files` the files that can be edit.
 
@@ -56,11 +56,13 @@ let g:p_edit_files = {
 
 ```
 
-###Regular Plan Task
+### Regular Plan Task
 1. `g:plan_month_work` regular work-task for every month.
 1. `g:plan_month_personal` regular personal-task for every month.
+1. `g:plan_month_review` regular review items for every month.
 1. `g:plan_week_work` regular work-task for every week.
 1. `g:plan_week_personal` regular personal-task for every week.
+1. `g:plan_week_review` regular review items for every week.
 1. `g:plan_year_work` regular work-task for every year.
 1. `g:plan_year_personal` regular personal-task for every year.
 
@@ -68,24 +70,34 @@ Take my regular tasks configuration for example:
 
 ```vim
 "
-" NOTE: add `;` to the end of each task
+" NOTE: add `;` to the end of each task to as a line break
 "
 let g:plan_week_work = {
     \ 1 : '1. 10:00 - 11:00 @2层灵芝 YNote Editor Weekly meeting;',
     \ 2 : '1. 16:00 - 16:30 weekly report;',
     \ 5 : '1. 14:00 - 16:00 @二层甘草 webfront weekly meeting;'
     \}
+
 let g:plan_week_personal = {
     \}
+
+let g:plan_week_review = [
+    \ '1. Invest & Finance;',
+    \ '1. Tech & Managment;',
+    \ '1. Enjoy Life;'
+    \]
+
 let g:plan_month_work = {
     \ 18: '1. Sprint 总结, 会议;'
     \}
+
 let g:plan_month_personal = {
     \ 3 : '1. 18:00 ~ @ buy <<Programmer>> magazine;',
     \ 8 : '1. 还房贷;',
     \ 28 : '1. 月度总结;1. 下月计划;'
     \}
 
+let g:plan_month_review = g:plan_week_review
 
 let g:plan_year_personal = {
     \'01-18': '1. 收房租;',
@@ -103,10 +115,13 @@ The `:EditPlan` command is equal `:PEdit plan` and `:EditPlanCwd` is equal to `:
 You can set  `g:p_edit_files` in `.vimrc`.
 
 
-##Screenshot
+## Screenshot
 ![plan-vim.png](plan-vim.png)
 
-##Change Log
+## Change Log
+
+* 2016-11-18
+    - ADD `g:plan_week_review` and `g:plan_month_review`
 
 * 2016-04-05
     - ADD key point of day

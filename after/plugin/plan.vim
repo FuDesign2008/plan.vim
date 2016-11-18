@@ -206,7 +206,11 @@ function! s:GetDayContent(day, month, year, isDiary)
     " weekly review
     if weekStr ==# 'Sun'
         let content = content . '## Weekly Review;'
-        let content = content . '1. ;'
+        if exists('g:plan_week_review')
+            let content = content . join(g:plan_week_review, '')
+        else
+            let content = content . '1. ;'
+        endif
         let content = content . ';;'
     endif
 
@@ -305,8 +309,15 @@ function! s:PlanInsertMonth(...)
     endwhile
 
     let footer = '## Monthly Review;'
-    let footer = footer . '1.;'
+
+    if exists('g:plan_month_review')
+        let footer = footer . join(g:plan_month_review, '')
+    else
+        let footer = footer . '1.;'
+    endif
+
     let footer = footer . ';;'
+
 
     let content = header . content . footer
     let all_content = split(content, ';')
