@@ -173,6 +173,7 @@ function! s:GetDayContent(day, month, year, isDiary)
     let content = ''
 
     if a:isDiary
+        let content = content . '## ' . a:year . '-' . fullMonth . '-' . fullDay . ' ' . weekStr .';;'
         return content
     endif
 
