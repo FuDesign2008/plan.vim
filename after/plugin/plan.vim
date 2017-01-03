@@ -184,8 +184,8 @@ function! s:GetDayContent(day, month, year, isDiary)
             let content = content . join(g:plan_week_keypoint, '')
         else
             let content = content . '1. ;'
-            let content = content . ';;'
         endif
+        let content = content . ';;'
     endif
 
     let content = content . '## ' . a:year . '-' . fullMonth . '-' . fullDay . ' ' . weekStr .';;'
@@ -298,8 +298,9 @@ function! s:PlanInsertMonth(...)
         let header = header . join(g:plan_month_keypoint, '')
     else
         let header = header . '1. ;'
-        let header = header . ';;'
     endif
+
+    let header = header . ';;'
 
 
     let days = s:ComputeDayCount(year, month)
