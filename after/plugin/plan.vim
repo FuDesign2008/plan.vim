@@ -180,8 +180,12 @@ function! s:GetDayContent(day, month, year, isDiary)
     " key of week
     if weekStr ==# 'Mon'
         let content = content . '## Key Point of Week;'
-        let content = content . '1. ;'
-        let content = content . ';;'
+        if exists('g:plan_week_keypoint')
+            let content = content . join(g:plan_week_keypoint, '')
+        else
+            let content = content . '1. ;'
+            let content = content . ';;'
+        endif
     endif
 
     let content = content . '## ' . a:year . '-' . fullMonth . '-' . fullDay . ' ' . weekStr .';;'
@@ -288,18 +292,15 @@ function! s:PlanInsertMonth(...)
     let year = str2nr(year, 10)
 
     let header = '# Plan of ' . year . '-' . s:PaddingTen(month) .';;'
-    let header = header . '[SMART](https://en.wikipedia.org/wiki/SMART_criteria);;'
-    let header = header . '* Specific: What, Why, Who, Where, Which;'
-    let header = header . '* Measurable;'
-    let header = header . '* Achieveable;'
-    let header = header . '* Relavant;'
-    let header = header . '* Time-bound;'
-    let header = header . ';## Work Targets;1. ;'
-    let header = header . ';## Personal Targets;'
-    let header = header . '1. (Invest & Finance): ;'
-    let header = header . '1. (Enjoy Life): ;'
-    let header = header . '1. (Tech & Managment): ;'
-    let header = header . ';'
+    let header = header . '## Key Point of Month;'
+
+    if exists('g:plan_month_keypoint')
+        let header = header . join(g:plan_month_keypoint, '')
+    else
+        let header = header . '1. ;'
+        let header = header . ';;'
+    endif
+
 
     let days = s:ComputeDayCount(year, month)
     let counter = 1

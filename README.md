@@ -120,6 +120,8 @@ You can set  `g:p_edit_files` in `.vimrc`.
 
 ## Change Log
 
+* 2017-01-03
+    - ADD `g:plan_week_keypoint`, `g:plan_month_keypoint`
 * 2016-11-18
     - ADD `g:plan_week_review` and `g:plan_month_review`
 
