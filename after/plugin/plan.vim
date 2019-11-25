@@ -380,10 +380,7 @@ function PEditCommandCompleter(A, L, P)
             call add(matchList, item)
         endif
     endfor
-    if len(matchList) > 0
-        return matchList
-    endif
-    return names
+    return matchList
 endfunction
 
 
