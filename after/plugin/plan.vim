@@ -370,6 +370,19 @@ endfunction
 function PEditCommandCompleter(A, L, P)
     let names = keys(g:p_edit_files)
     call sort(names)
+    let hint = trim(a:A)
+    if strlen(hint) == 0
+        return names
+    endif
+    let matchList = []
+    for item in names
+        if stridx(item, hint) > -1
+            call add(matchList, item)
+        endif
+    endfor
+    if len(matchList) > 0
+        return matchList
+    endif
     return names
 endfunction
 
