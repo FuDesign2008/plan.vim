@@ -1,8 +1,9 @@
-plan.vim
-=========
+# plan.vim
+
 A vim utility for making monthly plan, todo and so on in markdown.
 
 ## Install
+
 1. Copy the `plugin` folder to `~/.vim`.
 1. Configure regular-task options in `.vimrc`.
 1. Use `:PlanMonth`/`:DiaryMonth` command to generate plan/diary template for a month.
@@ -13,29 +14,31 @@ Tips: If you want to preview markdown file, you can install
 ## Usage
 
 ### Create Plan/Diary Template
-1. `:PlanMonth [month]  [year]` insert the template of plan for a month.
-    * If there is no arguments, the command will insert the template for
-    current month.
-    * If there is only `month` argument, the command will insert template for
-    the month in current year.
-    * If there are both `month` and `year` arguments, the command will insert
-    template for the month in the year.
+
+1. `:PlanMonth [month] [year]` insert the template of plan for a month.
+    - If there is no arguments, the command will insert the template for
+      current month.
+    - If there is only `month` argument, the command will insert template for
+      the month in current year.
+    - If there are both `month` and `year` arguments, the command will insert
+      template for the month in the year.
 1. `:PlanDay [day] [month] [year]` insert the template of plan for a day.
-    * If there is no arguments, the command will insert the template for today.
-    * If there is only `day` argument, the command will insert template for the
-    day in current month and current year.
-    * If there are both `day` and `month` arguments, the command will insert
-    template for the day in the month and current year.
-    * If there are `day`, `month`, `year` arguments, the command will insert
-    template for the day in the month and the year.
-1. `:DiaryMonth [month]  [year]` insert the template of diary for a month.
-    * See `:PlanMonth`
+    - If there is no arguments, the command will insert the template for today.
+    - If there is only `day` argument, the command will insert template for the
+      day in current month and current year.
+    - If there are both `day` and `month` arguments, the command will insert
+      template for the day in the month and current year.
+    - If there are `day`, `month`, `year` arguments, the command will insert
+      template for the day in the month and the year.
+1. `:DiaryMonth [month] [year]` insert the template of diary for a month.
+    - See `:PlanMonth`
 1. `:DiaryDay [day] [month] [year]` insert the template of diary for a day.
-    * See `:PlanDay`
+    - See `:PlanDay`
 1. `:GotoToday` goto the line of today in plan/diary file, the default map
    key is `<leader>gt`.
 
 ### Open Plan/Diary File
+
 1. `:EditPlan` open and edit plan file.
 1. `:EditPlanCwd` open and edit plan file with changing the current working
    directory.
@@ -44,6 +47,7 @@ Tips: If you want to preview markdown file, you can install
    directory.
 
 ## Options
+
 1. `g:plan_custom_keymap` custom to make key mapping or not, default value is `0`.
 1. `g:p_edit_files` the files that can be edit.
 
@@ -57,6 +61,7 @@ let g:p_edit_files = {
 ```
 
 ### Regular Plan Task
+
 1. `g:plan_month_work` regular work-task for every month.
 1. `g:plan_month_personal` regular personal-task for every month.
 1. `g:plan_month_review` regular review items for every month.
@@ -107,49 +112,60 @@ let g:plan_year_personal = {
 ```
 
 ## Open Other File/Directory
+
 1. `:PEdit <type>` open and edit `g:p_edit_files[<type>]` file or directory
 1. `:PEditCwd <type>` open and edit `g:p_edit_files[<type>]` file or directory with changing the current directory
 
 The `:EditPlan` command is equal `:PEdit plan` and `:EditPlanCwd` is equal to `:PEditCwd plan`.
 
-You can set  `g:p_edit_files` in `.vimrc`.
-
+You can set `g:p_edit_files` in `.vimrc`.
 
 ## Screenshot
+
 ![plan-vim.png](plan-vim.png)
 
 ## Change Log
 
-* 2017-01-03
-    - ADD `g:plan_week_keypoint`, `g:plan_month_keypoint`
-* 2016-11-18
-    - ADD `g:plan_week_review` and `g:plan_month_review`
+-   2019-11-25
+    -   ADD completer for `:PEdit` and `:PEditCwd` commands
+-   2017-01-03
+    -   ADD `g:plan_week_keypoint`, `g:plan_month_keypoint`
+-   2016-11-18
 
-* 2016-04-05
-    - ADD key point of day
+    -   ADD `g:plan_week_review` and `g:plan_month_review`
 
-* 2015-12-28
-    - ADD `:PEdit`, `:PEditCwd`, `g:p_edit_files`
-    - REMOVE `g:p_plan_file`, `g:p_diary_file`
+-   2016-04-05
 
-* 2015-05-31
-    - Leap year support
+    -   ADD key point of day
 
-* 2015-01-31
-    - ADD `:EditPlanCwd` and `:EditDiaryCwd` command
-    - REMOVE `g:p_change_dir`
+-   2015-12-28
 
-* 2015-01-27
-    - ADD `g:plan_year_work` and `g:plan_year_personal`
+    -   ADD `:PEdit`, `:PEditCwd`, `g:p_edit_files`
+    -   REMOVE `g:p_plan_file`, `g:p_diary_file`
 
-* 2015-01-20
-    - REMOVE `:EditPlanDir` command
-    - REMOVE default mapping keys for `:EditPlanDir` and `:EditPlan` commands
-    - ADD `:EditDiary` command, `g:p_diary_file`, `g:p_change_dir`
-    - RENAME `g:plan_file` rename to `g:p_plan_file`
+-   2015-05-31
 
-* 2015-01-05
-    - REMOVE the modules that depend on `node.js`
+    -   Leap year support
 
-* 2014-12-03
-    - ADD `:DiaryMonth`, `:DiaryDay` commands
+-   2015-01-31
+
+    -   ADD `:EditPlanCwd` and `:EditDiaryCwd` command
+    -   REMOVE `g:p_change_dir`
+
+-   2015-01-27
+
+    -   ADD `g:plan_year_work` and `g:plan_year_personal`
+
+-   2015-01-20
+
+    -   REMOVE `:EditPlanDir` command
+    -   REMOVE default mapping keys for `:EditPlanDir` and `:EditPlan` commands
+    -   ADD `:EditDiary` command, `g:p_diary_file`, `g:p_change_dir`
+    -   RENAME `g:plan_file` rename to `g:p_plan_file`
+
+-   2015-01-05
+
+    -   REMOVE the modules that depend on `node.js`
+
+-   2014-12-03
+    -   ADD `:DiaryMonth`, `:DiaryDay` commands
