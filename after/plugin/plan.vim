@@ -367,9 +367,15 @@ function! s:GotoToday()
     execute 'normal z.'
 endfunction
 
+function PEditCommandCompleter(A, L, P)
+    let names = keys(g:p_edit_files)
+    call sort(names)
+    return names
+endfunction
 
-command!   -nargs=1   PEditCwd     call   s:PEditCwd(<f-args>)
-command!   -nargs=1   PEdit        call   s:PEdit(<f-args>)
+
+command!   -nargs=1  -complete=customlist,PEditCommandCompleter  PEditCwd     call   s:PEditCwd(<f-args>)
+command!   -nargs=1  -complete=customlist,PEditCommandCompleter  PEdit        call   s:PEdit(<f-args>)
 
 command!   -nargs=0   EditPlanCwd  call   s:EditPlanCwd()
 command!   -nargs=0   EditPlan     call   s:EditPlan()
