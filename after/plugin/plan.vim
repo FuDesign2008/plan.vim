@@ -71,7 +71,7 @@ function! s:EditFile(type, changeDir)
         let globFilePath = glob(filePath)
         if isdirectory(globFilePath)
             if a:changeDir
-                execute 'cd ' . globFilePath
+                execute 'lcd ' . globFilePath
             endif
             execute 'edit ' . globFilePath
             return
@@ -81,7 +81,7 @@ function! s:EditFile(type, changeDir)
         let cwdEqualTargetPath = getcwd() == dirPath
 
         if a:changeDir && !cwdEqualTargetPath
-            execute 'cd ' . dirPath
+            execute 'lcd ' . dirPath
             let cwdEqualTargetPath = 1
         endif
 
