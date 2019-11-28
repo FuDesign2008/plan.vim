@@ -106,25 +106,14 @@ endfunction
 
 
 function! s:PEdit(type)
-    call s:EditFile(a:type, 0)
-endfunction
-
-function! s:PEditCwd(type)
     call s:EditFile(a:type, 1)
 endfunction
 
 
-" open plan file to  edit
-function! s:EditPlanCwd()
-    call s:PEditCwd('plan')
-endfunction
+
 
 function! s:EditPlan()
     call s:PEdit('plan')
-endfunction
-
-function! s:EditDiaryCwd()
-    call s:PEditCwd('diary')
 endfunction
 
 function! s:EditDiary()
@@ -384,13 +373,10 @@ function PEditCommandCompleter(A, L, P)
 endfunction
 
 
-command!   -nargs=1  -complete=customlist,PEditCommandCompleter  PEditCwd     call   s:PEditCwd(<f-args>)
 command!   -nargs=1  -complete=customlist,PEditCommandCompleter  PEdit        call   s:PEdit(<f-args>)
 
-command!   -nargs=0   EditPlanCwd  call   s:EditPlanCwd()
 command!   -nargs=0   EditPlan     call   s:EditPlan()
 
-command!   -nargs=0   EditDiaryCwd call   s:EditDiaryCwd()
 command!   -nargs=0   EditDiary    call   s:EditDiary()
 
 command!   -nargs=*   PlanMonth    call   s:PlanInsertMonth(<f-args>)
