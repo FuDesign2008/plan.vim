@@ -40,11 +40,7 @@ Tips: If you want to preview markdown file, you can install
 ### Open Plan/Diary File
 
 1. `:EditPlan` open and edit plan file.
-1. `:EditPlanCwd` open and edit plan file with changing the current working
-   directory.
 1. `:EditDiary` open and edit diary file.
-1. `:EditDiaryCwd` open and edit diary file with changing the current working
-   directory.
 
 ## Options
 
@@ -114,9 +110,7 @@ let g:plan_year_personal = {
 ## Open Other File/Directory
 
 1. `:PEdit <type>` open and edit `g:p_edit_files[<type>]` file or directory
-1. `:PEditCwd <type>` open and edit `g:p_edit_files[<type>]` file or directory with changing the current directory
-
-The `:EditPlan` command is equal `:PEdit plan` and `:EditPlanCwd` is equal to `:PEditCwd plan`.
+    - The `:EditPlan` command is equal `:PEdit plan`.
 
 You can set `g:p_edit_files` in `.vimrc`.
 
@@ -126,46 +120,35 @@ You can set `g:p_edit_files` in `.vimrc`.
 
 ## Change Log
 
+-   2019-11-28
+    -   REMOVE remove commands
+        -   `:PEditCwd`
+        -   `:EditPlanCwd`
+        -   `:EditDiaryCwd`
 -   2019-11-25
     -   ADD completer for `:PEdit` and `:PEditCwd` commands
 -   2017-01-03
     -   ADD `g:plan_week_keypoint`, `g:plan_month_keypoint`
 -   2016-11-18
-
     -   ADD `g:plan_week_review` and `g:plan_month_review`
-
 -   2016-04-05
-
     -   ADD key point of day
-
 -   2015-12-28
-
     -   ADD `:PEdit`, `:PEditCwd`, `g:p_edit_files`
     -   REMOVE `g:p_plan_file`, `g:p_diary_file`
-
 -   2015-05-31
-
     -   Leap year support
-
 -   2015-01-31
-
     -   ADD `:EditPlanCwd` and `:EditDiaryCwd` command
     -   REMOVE `g:p_change_dir`
-
 -   2015-01-27
-
     -   ADD `g:plan_year_work` and `g:plan_year_personal`
-
 -   2015-01-20
-
     -   REMOVE `:EditPlanDir` command
     -   REMOVE default mapping keys for `:EditPlanDir` and `:EditPlan` commands
     -   ADD `:EditDiary` command, `g:p_diary_file`, `g:p_change_dir`
     -   RENAME `g:plan_file` rename to `g:p_plan_file`
-
 -   2015-01-05
-
     -   REMOVE the modules that depend on `node.js`
-
 -   2014-12-03
     -   ADD `:DiaryMonth`, `:DiaryDay` commands
