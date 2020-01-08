@@ -106,7 +106,8 @@ endfunction
 
 
 function! s:PEdit(type)
-    call s:EditFile(a:type, 1)
+    let theType = trim(a:type)
+    call s:EditFile(theType, 1)
 endfunction
 
 
