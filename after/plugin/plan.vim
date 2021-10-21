@@ -177,6 +177,10 @@ function! s:GetDayContent(day, month, year, isDiary)
             let content = content . '1. ;'
         endif
         let content = content . ';;'
+        let content = content . '### Work;'
+        let content = content . ';;'
+        let content = content . '### Personal;'
+        let content = content . ';;'
     endif
 
     let content = content . '## ' . a:year . '-' . fullMonth . '-' . fullDay . ' ' . weekStr .';;'
@@ -207,6 +211,10 @@ function! s:GetDayContent(day, month, year, isDiary)
         else
             let content = content . '1. ;'
         endif
+        let content = content . ';;'
+        let content = content . '### Work;'
+        let content = content . ';;'
+        let content = content . '### Personal;'
         let content = content . ';;'
     endif
 
