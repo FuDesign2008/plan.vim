@@ -173,8 +173,6 @@ function! s:GetDayContent(day, month, year, isDiary)
         " let content = content . '## Key Point of Week;'
         " if exists('g:plan_week_keypoint')
             " let content = content . join(g:plan_week_keypoint, '')
-        " else
-            " let content = content . '1. ;'
         " endif
         " let content = content . ';;'
         " let content = content . '### Work;'
@@ -210,15 +208,13 @@ function! s:GetDayContent(day, month, year, isDiary)
         let content = content . '### Review;'
         if exists('g:plan_week_review')
             let content = content . join(g:plan_week_review, '')
-        else
-            let content = content . '1. ;'
         endif
         let content = content . ';;'
-        let content = content . '### OKR;'
+        let content = content . '### Work OKR;'
+        let content = content . ';;'
+        let content = content . '### Personal OKR;'
         if exists('g:plan_week_keypoint')
             let content = content . join(g:plan_week_keypoint, '')
-        else
-            let content = content . '1. ;'
         endif
         let content = content . ';;'
     endif
@@ -296,16 +292,16 @@ function! s:PlanInsertMonth(...)
     let year = str2nr(year, 10)
 
     let header = '# Plan of ' . year . '-' . s:PaddingTen(month) .';;'
-    let header = header . '## Month OKR;'
-
+    let header = header . '## Monthly OKR;'
+    let header = header . ';;'
     if exists('g:plan_month_keypoint')
         let header = header . join(g:plan_month_keypoint, '')
-    else
-        let header = header . '1. ;'
     endif
 
+    let header = header . '### Work OKR;'
     let header = header . ';;'
-
+    let header = header . '### Personal OKR;'
+    let header = header . ';;'
 
     let days = s:ComputeDayCount(year, month)
     let counter = 1
@@ -319,8 +315,6 @@ function! s:PlanInsertMonth(...)
 
     if exists('g:plan_month_review')
         let footer = footer . join(g:plan_month_review, '')
-    else
-        let footer = footer . '1.;'
     endif
 
     let footer = footer . ';;'
