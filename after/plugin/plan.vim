@@ -169,19 +169,19 @@ function! s:GetDayContent(day, month, year, isDiary)
     endif
 
     " key of week
-    if weekStr ==# 'Mon'
-        let content = content . '## Key Point of Week;'
-        if exists('g:plan_week_keypoint')
-            let content = content . join(g:plan_week_keypoint, '')
-        else
-            let content = content . '1. ;'
-        endif
-        let content = content . ';;'
-        let content = content . '### Work;'
-        let content = content . ';;'
-        let content = content . '### Personal;'
-        let content = content . ';;'
-    endif
+    " if weekStr ==# 'Mon'
+        " let content = content . '## Key Point of Week;'
+        " if exists('g:plan_week_keypoint')
+            " let content = content . join(g:plan_week_keypoint, '')
+        " else
+            " let content = content . '1. ;'
+        " endif
+        " let content = content . ';;'
+        " let content = content . '### Work;'
+        " let content = content . ';;'
+        " let content = content . '### Personal;'
+        " let content = content . ';;'
+    " endif
 
     let content = content . '## ' . a:year . '-' . fullMonth . '-' . fullDay . ' ' . weekStr .';;'
 
@@ -205,16 +205,21 @@ function! s:GetDayContent(day, month, year, isDiary)
 
     " weekly review
     if weekStr ==# 'Sun'
-        let content = content . '## Weekly Review;'
+        let content = content . '## Weekly Review & OKR;'
+        let content = content . ';;'
+        let content = content . '### Review;'
         if exists('g:plan_week_review')
             let content = content . join(g:plan_week_review, '')
         else
             let content = content . '1. ;'
         endif
         let content = content . ';;'
-        let content = content . '### Work;'
-        let content = content . ';;'
-        let content = content . '### Personal;'
+        let content = content . '### OKR;'
+        if exists('g:plan_week_keypoint')
+            let content = content . join(g:plan_week_keypoint, '')
+        else
+            let content = content . '1. ;'
+        endif
         let content = content . ';;'
     endif
 
@@ -291,7 +296,7 @@ function! s:PlanInsertMonth(...)
     let year = str2nr(year, 10)
 
     let header = '# Plan of ' . year . '-' . s:PaddingTen(month) .';;'
-    let header = header . '## Key Point of Month;'
+    let header = header . '## Month OKR;'
 
     if exists('g:plan_month_keypoint')
         let header = header . join(g:plan_month_keypoint, '')
@@ -310,7 +315,7 @@ function! s:PlanInsertMonth(...)
         let counter += 1
     endwhile
 
-    let footer = '## Monthly Review;'
+    let footer = '## Monthly Review & Plan;'
 
     if exists('g:plan_month_review')
         let footer = footer . join(g:plan_month_review, '')
