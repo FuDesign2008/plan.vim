@@ -68,12 +68,12 @@ function! s:EditFile(type, changeDir)
     let filePath = get(g:p_edit_files, a:type, '')
 
     if len(filePath) > 1
-        let globFilePath = glob(filePath)
-        if isdirectory(globFilePath)
+        let expandedFilePath = expand(filePath)
+        if isdirectory(expandedFilePath)
             if a:changeDir
-                execute 'lcd ' . globFilePath
+                execute 'lcd ' . expandedFilePath
             endif
-            execute 'edit ' . globFilePath
+            execute 'edit ' . expandedFilePath
             return
         endif
 
